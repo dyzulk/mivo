@@ -20,3 +20,7 @@ Thumbs.db
 
 # Secrets and Environment
 .env
+
+# VitePress
+docs/.vitepress/dist
+docs/.vitepress/cache

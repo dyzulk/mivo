@@ -1,4 +1,6 @@
 import { defineConfig } from 'vitepress'
+import { sidebarEn, sidebarId } from './config/sidebars'
+import { navEn, navId } from './config/nav'
 
 export default defineConfig({
   title: "MIVO",
@@ -8,45 +10,17 @@ export default defineConfig({
   lastUpdated: true,
   
   head: [
-    ['link', { rel: 'icon', href: '/logo.png' }]
+    ['link', { rel: 'icon', href: '/logo-m.svg' }]
   ],
 
+  // Shared theme config
   themeConfig: {
-    logo: '/logo.png',
+    logo: { 
+      light: '/logo-m.svg', 
+      dark: '/logo-m-dark.svg' 
+    },
     siteTitle: 'MIVO',
     
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/installation' },
-      { text: 'Docker', link: '/guide/docker' },
-      { text: 'GitHub', link: 'https://github.com/dyzulk/mivo' }
-    ],
-
-    sidebar: [
-      {
-        text: 'Introduction',
-        items: [
-          { text: 'What is MIVO?', link: '/' },
-          { text: 'Installation', link: '/guide/installation' }
-        ]
-      },
-      {
-        text: 'Deployment',
-        items: [
-          { text: 'Docker Guide', link: '/guide/docker' },
-          { text: 'Manual Installation', link: '/guide/installation#manual-installation' },
-          { text: 'PaaS / Cloud', link: '/guide/installation#paas-cloud-railway-render-heroku' }
-        ]
-      },
-      {
-        text: 'Support',
-        items: [
-          { text: 'Contribution', link: 'https://github.com/dyzulk/mivo/blob/main/CONTRIBUTING.md' },
-          { text: 'Donate', link: 'https://sociabuzz.com/dyzulkdev/tribe' }
-        ]
-      }
-    ],
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/dyzulk/mivo' }
     ],
@@ -59,5 +33,25 @@ export default defineConfig({
     search: {
       provider: 'local'
     }
+  },
+
+  locales: {
+    root: {
+      label: 'English',
+      lang: 'en',
+      themeConfig: {
+        nav: navEn,
+        sidebar: sidebarEn
+      }
+    },
+    id: {
+      label: 'Indonesia',
+      lang: 'id',
+      themeConfig: {
+        nav: navId,
+        sidebar: sidebarId
+      }
+    }
   }
 })
+

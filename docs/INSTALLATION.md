@@ -2,14 +2,14 @@
 
 This guide covers installation on various platforms. MIVO is designed to be lightweight and runs on almost any PHP-capable server.
 
-## 📋 General Requirements
+## General Requirements
 *   **PHP**: 8.0 or higher
 *   **Extensions**: `sqlite3`, `openssl`, `mbstring`, `json`
 *   **Database**: SQLite (File based, no server needed)
 
 ---
 
-## 🐋 Docker (Recommended)
+## Docker (Recommended)
 The easiest way to run MIVO.
 
 1.  **Build & Run**
@@ -30,7 +30,7 @@ The easiest way to run MIVO.
 
 ---
 
-## 🪶 Apache / OpenLiteSpeed
+## Apache / OpenLiteSpeed
 1.  **Document Root**: Set your web server's document root to the `public/` folder.
 2.  **Rewrite Rules**: Ensure `mod_rewrite` is enabled. MIVO includes a `.htaccess` file in `public/` that handles URL routing automatically.
 3.  **Permissions**: Ensure the web server user (e.g., `www-data`) has **write** access to:
@@ -40,7 +40,7 @@ The easiest way to run MIVO.
 
 ---
 
-## 🟢 Nginx
+## Nginx
 Nginx does not read `.htaccess`. Use this configuration block in your `server` block:
 
 ```nginx
@@ -67,14 +67,14 @@ server {
 
 ---
 
-## 🪟 IIS (Windows)
+## IIS (Windows)
 1.  **Document Root**: Point the site to the `public/` folder.
 2.  **Web Config**: A `web.config` file has been provided in `public/` to handle URL Rewriting.
 3.  **Requirements**: Ensure **URL Rewrite Module 2.0** is installed on IIS.
 
 ---
 
-## 📱 STB / Android (Awebserver / Termux)
+## STB / Android (Awebserver / Termux)
 
 ### Awebserver
 1.  Copy the MIVO files to `/htdocs`.
@@ -95,7 +95,7 @@ server {
 
 ---
 
-## 🌐 Shared Hosting (cPanel / DirectAdmin)
+## Shared Hosting (cPanel / DirectAdmin)
 Most shared hosting uses Apache or OpenLiteSpeed, which is fully compatible.
 
 1.  **Upload Files**: Upload the MIVO files to `public_html/mivo` (or a subdomain folder).
@@ -107,7 +107,7 @@ Most shared hosting uses Apache or OpenLiteSpeed, which is fully compatible.
 
 ---
 
-## 🎛️ aaPanel (VPS)
+## aaPanel (VPS)
 1.  **Create Website**: Add site -> PHP-8.x.
 2.  **Site Directory**:
     *   Set **Running Directory** (bukan Site Directory) to `/public`.
@@ -117,7 +117,7 @@ Most shared hosting uses Apache or OpenLiteSpeed, which is fully compatible.
 
 ---
 
-## ☁️ PaaS Cloud (Railway / Render / Heroku)
+## PaaS Cloud (Railway / Render / Heroku)
 **WARNING**: MIVO uses SQLite (File Database). Most PaaS cloud have **Ephemeral Filesytem** (Reset on restart).
 
 *   **Requirement**: You MUST mount a **Persistent Volume/Disk**.
@@ -126,7 +126,7 @@ Most shared hosting uses Apache or OpenLiteSpeed, which is fully compatible.
 
 ---
 
-## 📥 Post-Installation
+## Post-Installation
 After setting up the server:
 1.  Copy `.env.example` to `.env` (if not already done).
 2.  **Install Application**

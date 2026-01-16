@@ -6,14 +6,14 @@ title: Installation Guide
 
 This guide covers installation on various platforms. MIVO is designed to be lightweight and runs on almost any PHP-capable server.
 
-## 📋 General Requirements
+## <Icon name="ClipboardList" color="primary" /> General Requirements {#requirements}
 *   **PHP**: 8.0 or higher
 *   **Extensions**: `sqlite3`, `openssl`, `mbstring`, `json`
 *   **Database**: SQLite (File based, no server needed)
 
 ---
 
-## 🐋 Docker (Recommended)
+## <Icon name="Container" color="info" /> Docker (Recommended)
 The easiest way to run MIVO.
 
 1.  **Build & Run**
@@ -34,7 +34,9 @@ The easiest way to run MIVO.
 
 ---
 
-## 🪶 Apache / OpenLiteSpeed
+## <Icon name="Server" color="success" /> Web Servers {#web-servers}
+
+### Apache / OpenLiteSpeed
 1.  **Document Root**: Set your web server's document root to the `public/` folder.
 2.  **Rewrite Rules**: Ensure `mod_rewrite` is enabled. MIVO includes a `.htaccess` file in `public/` that handles URL routing automatically.
 3.  **Permissions**: Ensure the web server user (e.g., `www-data`) has **write** access to:
@@ -42,9 +44,7 @@ The easiest way to run MIVO.
     *   `app/Config/` (if using installer)
     *   `.env` file
 
----
-
-## 🟢 Nginx
+### Nginx
 Nginx does not read `.htaccess`. Use this configuration block in your `server` block:
 
 ```nginx
@@ -69,16 +69,14 @@ server {
 }
 ```
 
----
-
-## 🪟 IIS (Windows)
+### IIS (Windows)
 1.  **Document Root**: Point the site to the `public/` folder.
 2.  **Web Config**: A `web.config` file has been provided in `public/` to handle URL Rewriting.
 3.  **Requirements**: Ensure **URL Rewrite Module 2.0** is installed on IIS.
 
 ---
 
-## 📱 STB / Android (Awebserver / Termux)
+## <Icon name="Smartphone" color="warning" /> Mobile / STB {#mobile-stb}
 
 ### Awebserver
 1.  Copy the MIVO files to `/htdocs`.
@@ -96,10 +94,7 @@ server {
 
 ---
 
-
----
-
-## 🌐 Shared Hosting (cPanel / DirectAdmin)
+## <Icon name="Globe" color="info" /> Shared Hosting {#shared-hosting}
 Most shared hosting uses Apache or OpenLiteSpeed, which is fully compatible.
 
 1.  **Upload Files**: Upload the MIVO files to `public_html/mivo` (or a subdomain folder).
@@ -111,7 +106,9 @@ Most shared hosting uses Apache or OpenLiteSpeed, which is fully compatible.
 
 ---
 
-## 🎛️ aaPanel (VPS)
+## <Icon name="Cloud" color="primary" /> VPS & Cloud {#vps-cloud}
+
+### aaPanel
 1.  **Create Website**: Add site -> PHP-8.x.
 2.  **Site Directory**:
     *   Set **Running Directory** (bukan Site Directory) to `/public`.
@@ -119,10 +116,9 @@ Most shared hosting uses Apache or OpenLiteSpeed, which is fully compatible.
 3.  **URL Rewrite**: Select `thinkphp` or `laravel` template (compatible) OR just use the Nginx config provided above.
 4.  **Permissions**: Chown `www` user to the site directory.
 
----
-
-## ☁️ PaaS Cloud (Railway / Render / Heroku)
-**WARNING**: MIVO uses SQLite (File Database). Most PaaS cloud have **Ephemeral Filesytem** (Reset on restart).
+### PaaS Cloud (Railway / Render / Heroku)
+> [!WARNING]
+> MIVO uses SQLite (File Database). Most PaaS cloud have **Ephemeral Filesytem** (Reset on restart).
 
 *   **Requirement**: You MUST mount a **Persistent Volume/Disk**.
 *   **Mount Path**: Mount your volume to `/var/www/html/app/Database` (or wherever you put MIVO).
@@ -130,7 +126,7 @@ Most shared hosting uses Apache or OpenLiteSpeed, which is fully compatible.
 
 ---
 
-## 📥 Post-Installation
+## <Icon name="Settings" color="success" /> Post-Installation {#post-installation}
 After setting up the server:
 1.  Copy `.env.example` to `.env` (if not already done).
 2.  **Install Application**
@@ -138,3 +134,4 @@ After setting up the server:
         Run `php mivo install` in your terminal.
     *   **Option B: Web Installer**
         Open `http://your-domain.com/install` in your browser.
+

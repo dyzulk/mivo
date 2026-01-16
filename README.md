@@ -10,16 +10,16 @@ MIVO is a complete rewrite of the legendary **Mikhmon v3**, re-engineered with a
 
 ![Status](https://img.shields.io/badge/Status-Beta-orange) ![PHP](https://img.shields.io/badge/PHP-8.0+-777BB4) ![License](https://img.shields.io/badge/License-MIT-green)
 
-## 🚀 Key Features
+## Key Features
 
-*   **⚡ Lightweight Core**: Built on a custom minimal MVC framework (~50KB core) optimized for speed.
-*   **🎨 Modern UI/UX**: Fresh Glassmorphism design system using TailwindCSS and Alpine.js.
-*   **📱 Responsive**: Fully optimized mobile experience with touch-friendly navigation.
-*   **🔒 Secure**: Environment-based configuration (`.env`), encrypted credentials, and secure session management.
-*   **🔌 API Ready**: Built-in REST API support with CORS management for external integrations.
-*   **🛠️ CLI Tool**: Includes `mivo` CLI helper for easy management and installation.
+*   **Lightweight Core**: Built on a custom minimal MVC framework (~50KB core) optimized for speed.
+*   **Modern UI/UX**: Fresh Glassmorphism design system using TailwindCSS and Alpine.js.
+*   **Responsive**: Fully optimized mobile experience with touch-friendly navigation.
+*   **Secure**: Environment-based configuration (`.env`), encrypted credentials, and secure session management.
+*   **API Ready**: Built-in REST API support with CORS management for external integrations.
+*   **CLI Tool**: Includes `mivo` CLI helper for easy management and installation.
 
-## 🛠️ Installation
+## Installation
 
 ### Requirements
 *   PHP 8.0 or higher
@@ -59,7 +59,7 @@ MIVO is a complete rewrite of the legendary **Mikhmon v3**, re-engineered with a
     *   **Option B: Web Installer**
         Open `http://localhost:8000/install` in your browser and follow the instructions.
 
-## 📂 Structure
+## Structure
 
 *   `app/` - Core application logic (Controllers, Models, Views).
 *   `public/` - Web root and assets.
@@ -67,20 +67,20 @@ MIVO is a complete rewrite of the legendary **Mikhmon v3**, re-engineered with a
 *   `mivo` - CLI executable entry point.
 
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## ☕ Support the Project
+## Support the Project
 
 If you find MIVO useful, please consider supporting its development. Your contribution helps keep the project alive!
 
 [![SociaBuzz Tribe](https://img.shields.io/badge/SociaBuzz-Tribe-green?style=for-the-badge&logo=sociabuzz&logoColor=white)](https://sociabuzz.com/dyzulkdev/tribe)
 
 
-## 📄 License
+## License
 
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ---
-*Created with ❤️ by DyzulkDev*
+*Created by DyzulkDev*

@@ -6,7 +6,7 @@ title: Docker Guide
 
 This Docker image is built on **Alpine Linux** and **Nginx**, optimized for high performance and low resource usage.
 
-## 🚀 Quick Start
+## <Icon name="Zap" color="warning" /> Quick Start
 
 Run MIVO in a single command:
 
@@ -26,7 +26,7 @@ Open your browser and navigate to `http://localhost:8080`.
 **Initial Setup:**
 If this is your first run, you will be redirected to the **Web Installer**. Follow the on-screen instructions to create the database and admin account.
 
-## 🛠️ Docker Compose
+## <Icon name="Wrench" color="primary" /> Docker Compose
 
 For a more permanent setup, use `docker-compose.yml`:
 
@@ -45,13 +45,13 @@ services:
       - ./mivo-data:/var/www/html/app/Database
 ```
 
-## 📦 Tags
+## <Icon name="Tags" color="info" /> Tags
 
 - `latest`: Stable release (recommended).
 - `edge`: Bleeding edge build from the `main` branch.
 - `v1.x.x`: Specific released versions.
 
-## 🔧 Environment Variables
+## <Icon name="Sliders" color="success" /> Environment Variables
 
 | Variable | Description | Default |
 | :--- | :--- | :--- |
@@ -60,18 +60,19 @@ services:
 | `APP_KEY` | 32-character random string (base64). Auto-generated on first install if not provided. | |
 | `TZ` | Timezone for the container. | `UTC` |
 
-## 📂 Volumes
+## <Icon name="Folder" color="primary" /> Volumes
 
 Persist your data by mounting these paths:
 
 - `/var/www/html/app/Database`: Stores the SQLite database and session files. **(Critical)**
 - `/var/www/html/public/assets/img/logos`: Stores uploaded custom logos.
 
-## 🤝 Support the Project
+## <Icon name="Heart" color="danger" /> Support the Project
 
 If you find MIVO useful, please consider supporting its development. Your contribution helps keep the project alive!
 
 [![SociaBuzz Tribe](https://img.shields.io/badge/SociaBuzz-Tribe-green?style=for-the-badge&logo=sociabuzz&logoColor=white)](https://sociabuzz.com/dyzulkdev/tribe)
 
 ---
-*Created with ❤️ by DyzulkDev*
+*Created with <Icon name="Heart" color="danger" /> by DyzulkDev*
+

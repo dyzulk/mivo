@@ -1,0 +1,429 @@
+/* Fonts Setup */
+@font-face {
+  font-family: 'Geist';
+  src: url('/assets/fonts/Geist-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/assets/fonts/Geist-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/assets/fonts/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  /* Fonts */
+  --vp-font-family-base: "Geist", sans-serif;
+  --vp-font-family-mono: "Geist Mono", monospace;
+
+  /* Colors Override to match MIVO */
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-alt: #fafafa;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-text-1: #000000;
+  --vp-c-text-2: #666666;
+  
+  --vp-c-brand-1: #000000;
+  --vp-c-brand-2: #333333;
+  --vp-c-brand-3: #666666;
+
+  /* Icon Colors - Light */
+  --mivo-icon-base: var(--vp-c-text-1);
+  --mivo-icon-muted: var(--vp-c-text-2);
+  --mivo-icon-primary: var(--vp-c-brand-1);
+  --mivo-icon-info: #3b82f6;
+  --mivo-icon-success: #22c55e;
+  --mivo-icon-warning: #eab308;
+  --mivo-icon-danger: #ef4444;
+}
+
+.dark {
+  --vp-c-bg: #000000;
+  --vp-c-bg-alt: #111111;
+  --vp-c-bg-elv: #111111;
+  --vp-c-text-1: #ffffff;
+  --vp-c-text-2: #888888;
+  
+  --vp-c-brand-1: #ffffff;
+  --vp-c-brand-2: #eaeaea;
+  --vp-c-brand-3: #999999;
+
+  /* Icon Colors - Dark */
+  --mivo-icon-base: var(--vp-c-text-1);
+  --mivo-icon-muted: var(--vp-c-text-2);
+  --mivo-icon-primary: var(--vp-c-brand-1);
+  --mivo-icon-info: #60a5fa;
+  --mivo-icon-success: #4ade80;
+  --mivo-icon-warning: #facc15;
+  --mivo-icon-danger: #f87171;
+}
+
+/* Glassmorphism Overrides */
+
+/* Navbar Glass */
+.VPNav {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.dark .VPNav {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Sidebar Glass */
+.VPSidebar {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(0,0,0,0.05);
+}
+.dark .VPSidebar {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Content Container - Transparent to show particles */
+.VPContent {
+  background: transparent !important;
+}
+
+/* Footer Glass */
+.VPFooter {
+  background-color: transparent !important;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+.dark .VPFooter {
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Local Search Box Glass */
+.VPLocalSearchBox {
+   background-color: rgba(255, 255, 255, 0.8) !important;
+   backdrop-filter: blur(12px);
+}
+.dark .VPLocalSearchBox {
+   background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Glassmorphism Cards (Feature Cards) */
+.VPFeature {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(40px);
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 1rem !important; /* rounded-2xl */
+  transition: all 0.3s ease;
+}
+
+.dark .VPFeature {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.VPFeature:hover {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+}
+
+.dark .VPFeature:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Fix text colors inside cards if needed */
+/* Global Button Styling (MIVO Style) */
+.VPButton {
+  border-radius: 0.375rem !important; /* rounded-md */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+.VPButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.VPButton:active {
+  transform: scale(0.95);
+}
+
+/* Primary Button (Brand) */
+.VPButton.brand {
+  background-color: var(--vp-c-brand-1) !important;
+  border-color: var(--vp-c-brand-1) !important;
+  color: var(--vp-c-bg) !important;
+}
+
+.dark .VPButton.brand {
+  color: #000 !important; /* Ensure black text on white button in dark mode */
+}
+
+/* Secondary Button (Alt) */
+.VPButton.alt {
+  background-color: transparent !important;
+  border: 1px solid var(--vp-c-brand-2) !important;
+  color: var(--vp-c-text-1) !important;
+}
+
+/* Mobile Navigation (Glass Overlay) */
+.VPNavScreen {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px);
+  position: fixed !important;
+  top: var(--vp-nav-height, 64px) !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: calc(100vh - var(--vp-nav-height, 64px)) !important; /* Force Height */
+  z-index: 90 !important;
+  overflow-y: auto !important;
+  opacity: 1 !important; /* Always opacity 1 if visible */
+  pointer-events: auto !important;
+  /* Remove transition that might delay visibility */
+  transition: background-color 0.25s !important; 
+}
+
+/* Rely on VitePress/Vue to toggle 'display' property */
+/* We just ensure that IF it is displayed, it looks right */
+
+.dark .VPNavScreen {
+  background-color: rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Mobile Sidebar (Slide-out) */
+@media (max-width: 960px) {
+  .VPSidebar {
+    background-color: rgba(255, 255, 255, 0.9) !important; /* Less transparent on mobile for readability */
+    backdrop-filter: blur(20px);
+    border-right: none !important;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+  }
+  
+  .dark .VPSidebar {
+    background-color: rgba(20, 20, 20, 0.9) !important;
+  }
+}
+
+/* Fix Hamburger Menu Icon Color & Interaction */
+.VPNavBarHamburger {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  z-index: 100 !important;
+}
+
+.VPNavBarHamburger .container .top,
+.VPNavBarHamburger .container .middle,
+.VPNavBarHamburger .container .bottom {
+  background-color: var(--vp-c-text-1) !important;
+}
+
+/* Ensure Logo Text is Visible on Mobile */
+/* High Contrast Sidebar & TOC */
+/* High Contrast Sidebar & TOC */
+.VPSidebarItem .text {
+  color: var(--vp-c-text-2) !important;
+  opacity: 1 !important; 
+  font-weight: 400 !important; 
+}
+
+/* Level 0 Parent Headers (Collapsible) */
+.VPSidebarItem.level-0 > .item > .text,
+.VPSidebarItem.level-0 > .item > .VPLink > .text {
+  color: var(--vp-c-text-1) !important;
+  font-weight: 700 !important; /* Bold for headers */
+}
+
+/* Level 1+ Sub-items explicitly regular */
+.VPSidebarItem.level-1 .text,
+.VPSidebarItem.level-2 .text {
+  font-weight: 400 !important;
+}
+
+/* Sidebar Lines (GitBook Style) */
+.VPSidebarItem.level-0 > .items {
+  border-left: 1px solid rgba(0, 0, 0, 0.05); /* Light vertical line */
+  margin-left: 1.15rem;
+  padding-left: 0.5rem;
+}
+
+.dark .VPSidebarItem.level-0 > .items {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Active Sidebar Item Differentiation */
+.VPSidebarItem.is-active > .item {
+  border-left: 2px solid var(--vp-c-brand-1); /* Bold indicator line */
+  margin-left: calc(-0.5rem - 1px); /* Overlap the group line */
+  padding-left: calc(0.5rem - 1px);
+}
+
+.VPSidebarItem.is-active > .item > .text,
+.VPSidebarItem.is-active > .item > .VPLink > .text {
+  color: var(--vp-c-brand-1) !important; 
+  font-weight: 400 !important; /* Keep active sub-item thinner than collapsible header */
+  background-color: transparent !important; /* Clean style */
+}
+
+/* Navbar Active Underline */
+.VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-1) !important;
+  position: relative;
+}
+
+.VPNavBarMenuLink.active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--vp-c-brand-1);
+}
+
+.VPDocOutlineItem .text {
+   color: var(--vp-c-text-2) !important;
+   font-size: 0.85rem;
+   font-weight: 400 !important;
+}
+
+.VPDocOutlineItem.active .text {
+  color: var(--vp-c-brand-1) !important;
+  font-weight: 600 !important;
+}
+
+/* Dark Mode Specific Contrast Boost */
+.dark .VPSidebarItem .text,
+.dark .VPDocOutlineItem .text {
+  color: #b0b0b0 !important; /* Brighter than default gray */
+}
+
+.dark .VPSidebarItem.is-active > .item > .text,
+.dark .VPSidebarItem.is-active > .item > .VPLink > .text,
+.dark .VPDocOutlineItem.active .text,
+.dark .VPSidebarItem.level-0 > .item > .text,
+.dark .VPSidebarItem.level-0 > .item > .VPLink > .text {
+  color: #ffffff !important;
+  /* Font weights are already inherited or set above */
+}
+
+/* Fix Code Block Background to be Glassy too */
+.vp-code-group .tabs {
+    background-color: rgba(255,255,255,0.5) !important;
+}
+.dark .vp-code-group .tabs {
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+/* Markdown Divider Contrast */
+.vp-doc hr {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.15); /* Stronger in light mode */
+  margin: 3rem 0;
+}
+
+.dark .vp-doc hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Stronger in dark mode */
+}
+
+/* Pagination Cards */
+.pager-link {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-radius: 0.75rem !important; /* rounded-xl */
+  padding: 1.5rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  text-decoration: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.dark .pager-link {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.pager-link:hover {
+  border-color: var(--vp-c-brand-1) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.dark .pager-link:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.pager-link .desc {
+  color: var(--vp-c-text-2) !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  margin-bottom: 4px !important;
+  display: block !important;
+}
+
+.pager-link .title {
+  color: var(--vp-c-brand-1) !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+}
+
+.pager-link.next {
+  text-align: right !important;
+  align-items: flex-end !important;
+}
+
+/* Language Switcher Flags Integration */
+.VPNavBarTranslations .items .title::before,
+.VPNavBarTranslations .items .VPMenuLink .VPLink.link span::before {
+  content: "";
+  display: inline-block;
+  width: 1.33333333em;
+  height: 1em;
+  margin-right: 0.6rem;
+  vertical-align: middle;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* --- English Flag (US) --- */
+
+/* 1. Target the link to English (Any link NOT starting with /id/) */
+.VPNavBarTranslations a:not([href^="/id/"])::before,
+.VPNavBarTranslations a:not([href^="/id/"]) span::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 480'%3E%3Cpath fill='%23bd3d44' d='M0 0h640v480H0z'/%3E%3Cpath stroke='%23fff' stroke-width='37' d='M0 74h640M0 148h640M0 222h640M0 296h640M0 370h640M0 444h640'/%3E%3Cpath fill='%23192f5d' d='M0 0h364v258.5H0z'/%3E%3Cg fill='%23fff'%3E%3Cg id='a'%3E%3Cg id='b'%3E%3Cpath id='c' d='M31 23l5 15.5-13.1-9.5H44l-13.1 9.5'/%3E%3Cuse href='%23c' x='62'/%3E%3Cuse href='%23c' x='124'/%3E%3Cuse href='%23c' x='186'/%3E%3Cuse href='%23c' x='248'/%3E%3C/g%3E%3Cuse href='%23b' x='31' y='21'/%3E%3C/g%3E%3Cuse href='%23a' y='42'/%3E%3Cuse href='%23a' y='84'/%3E%3Cuse href='%23a' y='126'/%3E%3Cuse href='%23a' y='168'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* 2. Target the active English title (when on /) */
+html[lang="en"] .VPNavBarTranslations .items .title::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 480'%3E%3Cpath fill='%23bd3d44' d='M0 0h640v480H0z'/%3E%3Cpath stroke='%23fff' stroke-width='37' d='M0 74h640M0 148h640M0 222h640M0 296h640M0 370h640M0 444h640'/%3E%3Cpath fill='%23192f5d' d='M0 0h364v258.5H0z'/%3E%3Cg fill='%23fff'%3E%3Cg id='a'%3E%3Cg id='b'%3E%3Cpath id='c' d='M31 23l5 15.5-13.1-9.5H44l-13.1 9.5'/%3E%3Cuse href='%23c' x='62'/%3E%3Cuse href='%23c' x='124'/%3E%3Cuse href='%23c' x='186'/%3E%3Cuse href='%23c' x='248'/%3E%3C/g%3E%3Cuse href='%23b' x='31' y='21'/%3E%3C/g%3E%3Cuse href='%23a' y='42'/%3E%3Cuse href='%23a' y='84'/%3E%3Cuse href='%23a' y='126'/%3E%3Cuse href='%23a' y='168'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* --- Indonesia Flag (ID) --- */
+
+/* 1. Target the link to Indonesia (Any link starting with /id/) */
+.VPNavBarTranslations a[href^="/id/"]::before,
+.VPNavBarTranslations a[href^="/id/"] span::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 480'%3E%3Cpath fill='%23e12127' d='M0 0h640v240H0z'/%3E%3Cpath fill='%23fff' d='M0 240h640v240H0z'/%3E%3C/svg%3E");
+}
+
+/* 2. Target the active Indonesia title (when on /id/) */
+html[lang="id"] .VPNavBarTranslations .items .title::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 480'%3E%3Cpath fill='%23e12127' d='M0 0h640v240H0z'/%3E%3Cpath fill='%23fff' d='M0 240h640v240H0z'/%3E%3C/svg%3E");
+}
+
+
+

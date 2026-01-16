@@ -6,7 +6,8 @@ hero:
   text: "Mikrotik Voucher Management"
   tagline: Modern, Lightweight, and Efficient. Built for low-end devices with premium UX.
   image:
-    src: /logo.png
+    light: /logo-m.svg
+    dark: /logo-m-dark.svg
     alt: MIVO Logo
   actions:
     - theme: brand
@@ -33,7 +34,7 @@ MIVO is a complete rewrite of the legendary **Mikhmon v3**, re-engineered to sol
 
 ### Key Highlights
 
-- **⚡ Blazing Fast**: No heavy frameworks like Laravel. Pure PHP 8.0+ performance.
-- **📱 Mobile First**: Fully responsive design that feels like a native app.
-- **🔌 API First**: Built-in REST API with CORS support for 3rd party integrations.
-- **🛠️ Developer Friendly**: Clean architecture, CLI tools (`php mivo`), and easy extension.
+- <Icon name="Zap" color="warning" /> **Blazing Fast**: No heavy frameworks like Laravel. Pure PHP 8.0+ performance.
+- <Icon name="Smartphone" color="info" /> **Mobile First**: Fully responsive design that feels like a native app.
+- <Icon name="Plug" color="success" /> **API First**: Built-in REST API with CORS support for 3rd party integrations.
+- <Icon name="Wrench" color="primary" /> **Developer Friendly**: Clean architecture, CLI tools (`php mivo`), and easy extension.
