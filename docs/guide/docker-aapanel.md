@@ -17,7 +17,7 @@ Create a new file named `.env` and configure your preferences:
 VERSION=latest
 CONTAINER_NAME=mivo
 HOST_IP=0.0.0.0
-APP_PORT=8080
+APP_PORT=8085
 APP_PATH=/www/dk_project/mivo
 APP_ENV=production
 APP_DEBUG=false
@@ -50,7 +50,7 @@ services:
     container_name: ${CONTAINER_NAME:-mivo}
     restart: unless-stopped
     ports:
-      - "${HOST_IP:-0.0.0.0}:${APP_PORT:-8080}:80"
+      - "${HOST_IP:-0.0.0.0}:${APP_PORT:-8085}:80"
     volumes:
       # Database & Sessions
       - ${APP_PATH:-.}/mivo_data:/var/www/html/app/Database
@@ -100,5 +100,5 @@ To access MIVO via a domain (e.g., `mivo.yourdomain.com`):
 2. Enter your domain name.
 3. For **PHP Version**, select **Reverse Proxy** (or create as Static and set up proxy later).
 4. After creation, open the site settings > **Reverse Proxy** > **Add Reverse Proxy**.
-5. **Target URL**: `http://127.0.0.1:8080` (Replace `8080` with your `APP_PORT`).
+5. **Target URL**: `http://127.0.0.1:8085` (Replace `8085` with your `APP_PORT`).
 6. Save and secure with SSL.

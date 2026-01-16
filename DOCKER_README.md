@@ -80,7 +80,7 @@ This method follows the standard aaPanel "Quick Install" pattern, using full con
 
 5.  **Setup Reverse Proxy**:
     *   Go to **Website** -> **Add Site** -> **Reverse Proxy**.
-    *   Target: `http://127.0.0.1:8080` (Usage of variable `${APP_PORT}` matches this).
+    *   Target: `http://127.0.0.1:8085` (Usage of variable `${APP_PORT}` matches this).
     *   Go to **Website** -> **Add Site**.
     *   Enter your domain name (e.g., `mivo.yourdomain.com`).
     *   Select **Reverse Proxy** as the PHP version (or set it up manually afterwards).

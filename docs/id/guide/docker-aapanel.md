@@ -17,7 +17,7 @@ Buat file baru bernama `.env` (atau simpan teks ini untuk nanti):
 VERSION=latest
 CONTAINER_NAME=mivo
 HOST_IP=0.0.0.0
-APP_PORT=8080
+APP_PORT=8085
 APP_PATH=/www/dk_project/mivo
 APP_ENV=production
 APP_DEBUG=false
@@ -50,7 +50,7 @@ services:
     container_name: ${CONTAINER_NAME:-mivo}
     restart: unless-stopped
     ports:
-      - "${HOST_IP:-0.0.0.0}:${APP_PORT:-8080}:80"
+      - "${HOST_IP:-0.0.0.0}:${APP_PORT:-8085}:80"
     volumes:
       # Database & Sessions
       - ${APP_PATH:-.}/mivo_data:/var/www/html/app/Database
@@ -100,5 +100,5 @@ Agar MIVO bisa diakses menggunakan domain (contoh: `mivo.domainanda.com`):
 2. Masukkan nama domain Anda.
 3. Pada **PHP Version**, pilih **Static** (atau langsung Reverse Proxy jika ada opsinya).
 4. Setelah site dibuat, buka settingannya > **Reverse Proxy** > **Add Reverse Proxy**.
-5. **Target URL**: `http://127.0.0.1:8080` (Ganti `8080` sesuai dengan `APP_PORT` Anda).
+5. **Target URL**: `http://127.0.0.1:8082` (Ganti `8082` sesuai dengan `APP_PORT` Anda).
 6. Simpan dan aktifkan SSL agar lebih aman.
