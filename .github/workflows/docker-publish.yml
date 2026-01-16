@@ -78,4 +78,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ env.IMAGE_NAME }}
           short-description: ${{ github.event.repository.description }}
-          readme-filepath: ./README.md
+          readme-filepath: ./DOCKER_README.md
