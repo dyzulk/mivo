@@ -8,7 +8,9 @@ export const navEn: DefaultTheme.NavItem[] = [
     text: 'Community', 
     items: [
       { text: 'Changelog', link: 'https://github.com/dyzulk/mivo/releases' },
-      { text: 'Contributing', link: 'https://github.com/dyzulk/mivo/blob/main/CONTRIBUTING.md' }
+      { text: 'Contributing', link: 'https://github.com/dyzulk/mivo/blob/main/CONTRIBUTING.md' },
+      { text: 'Forum (Issues)', link: 'https://github.com/dyzulk/mivo/issues' },
+      { text: 'Star on GitHub', link: 'https://github.com/dyzulk/mivo/stargazers' }
     ]
   }
 ]
@@ -21,7 +23,9 @@ export const navId: DefaultTheme.NavItem[] = [
     text: 'Komunitas', 
     items: [
       { text: 'Catatan Rilis', link: 'https://github.com/dyzulk/mivo/releases' },
-      { text: 'Kontribusi', link: 'https://github.com/dyzulk/mivo/blob/main/CONTRIBUTING.md' }
+      { text: 'Kontribusi', link: 'https://github.com/dyzulk/mivo/blob/main/CONTRIBUTING.md' },
+      { text: 'Forum (Issues)', link: 'https://github.com/dyzulk/mivo/issues' },
+      { text: 'Beri Bintang', link: 'https://github.com/dyzulk/mivo/stargazers' }
     ]
   }
 ]
