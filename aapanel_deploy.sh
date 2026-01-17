@@ -17,17 +17,23 @@ cd $PROJECT_PATH || exit
 
 # 1. Pull latest changes
 echo "Step 1: Pulling latest changes from Git..."
-git pull origin main # Adjust branch name if necessary
+# Fix for dubious ownership error
+git config --global --add safe.directory $PROJECT_PATH
+git pull origin main
 
 # 2. Install PHP dependencies
 if [ -f "composer.json" ]; then
     echo "Step 2: Installing PHP dependencies..."
+    # Set COMPOSER_HOME to avoid environment variable errors
+    export COMPOSER_HOME="$PROJECT_PATH/.composer"
     composer install --no-interaction --optimize-autoloader --no-dev
 fi
 
 # 3. Build Assets
 if [ -f "package.json" ]; then
     echo "Step 3: Building assets..."
+    # Set HOME for npm/node environment
+    export HOME="$PROJECT_PATH"
     # If node_modules doesn't exist, install first
     if [ ! -d "node_modules" ]; then
         npm install
@@ -43,6 +49,10 @@ chmod -R 755 public
 # If there's a storage directory (MVC style usually has one)
 if [ -d "storage" ]; then
     chmod -R 775 storage
+fi
+# Cleanup composer home if created
+if [ -d ".composer" ]; then
+    rm -rf .composer
 fi
 
 echo "---------------------------------------"
