@@ -4,6 +4,9 @@
 
 PROJECT_PATH="/www/wwwroot/<your_project_path>"
 
+# Set HOME at the beginning - essential for git and npm
+export HOME="$PROJECT_PATH"
+
 echo "---------------------------------------"
 echo "Starting Deployment: $(date)"
 echo "---------------------------------------"
@@ -17,7 +20,7 @@ cd $PROJECT_PATH || exit
 
 # 1. Pull latest changes
 echo "Step 1: Pulling latest changes from Git..."
-# Fix for dubious ownership error
+# Fix for dubious ownership error - now works because HOME is set
 git config --global --add safe.directory $PROJECT_PATH
 git pull origin main
 
@@ -32,12 +35,19 @@ fi
 # 3. Build Assets
 if [ -f "package.json" ]; then
     echo "Step 3: Building assets..."
-    # Set HOME for npm/node environment
-    export HOME="$PROJECT_PATH"
     # If node_modules doesn't exist, install first
     if [ ! -d "node_modules" ]; then
+        echo "node_modules not found, installing..."
         npm install
     fi
+    
+    # Force permissions on the tailwind binary and its target
+    echo "Ensuring node_modules permissions..."
+    chmod -R 755 node_modules
+    find node_modules/.bin/ -type l -exec chmod -h 755 {} +
+    find node_modules/tailwindcss/ -type f -name "tailwindcss" -exec chmod +x {} +
+    
+    # Try running build
     npm run build
 fi
 
