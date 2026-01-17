@@ -15,14 +15,25 @@ class InstallController extends Controller {
             header('Location: /login');
             exit;
         }
+
+        $permissions = $this->checkPermissions();
         
-        return $this->view('install');
+        return $this->view('install', [
+            'permissions' => $permissions
+        ]);
     }
 
     public function process() {
         if ($this->isInstalled()) {
             header('Location: /login');
             exit;
+        }
+
+        $permissions = $this->checkPermissions();
+        if (!$permissions['db_writable'] || !$permissions['root_writable']) {
+             \App\Helpers\FlashHelper::set('error', 'Izin Ditolak', 'Pastikan folder app/Database dan root direktori dapat ditulis oleh server web.');
+             header('Location: /install');
+             exit;
         }
 
         $username = $_POST['username'] ?? 'admin';
@@ -61,6 +72,17 @@ class InstallController extends Controller {
             header('Location: /install');
             exit;
         }
+    }
+
+    private function checkPermissions() {
+        $dbDir = ROOT . '/app/Database';
+        $envFile = ROOT . '/.env';
+        
+        return [
+            'db_writable' => is_writable($dbDir),
+            'env_writable' => file_exists($envFile) ? is_writable($envFile) : is_writable(ROOT),
+            'root_writable' => is_writable(ROOT)
+        ];
     }
 
     private function isInstalled() {

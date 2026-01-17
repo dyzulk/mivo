@@ -20,6 +20,26 @@
         </div>
 
         <div class="card p-6 sm:p-8 space-y-6">
+            <?php if (isset($permissions) && (!$permissions['db_writable'] || !$permissions['root_writable'])): ?>
+                <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6">
+                    <div class="flex items-center gap-3 text-red-500 mb-2">
+                        <i class="ph-bold ph-warning text-lg"></i>
+                        <h4 class="font-bold text-sm">Peringatan Izin Direktori</h4>
+                    </div>
+                    <ul class="text-xs text-red-400 space-y-1 list-disc list-inside">
+                        <?php if (!$permissions['db_writable']): ?>
+                            <li>Folder <code>app/Database</code> harus writable (chmod 775/777).</li>
+                        <?php endif; ?>
+                        <?php if (!$permissions['root_writable']): ?>
+                            <li>Root direktori harus writable untuk membuat file <code>.env</code>.</li>
+                        <?php endif; ?>
+                    </ul>
+                    <p class="text-[10px] text-red-400/70 mt-3 pt-3 border-t border-red-500/10">
+                        Silakan perbaiki izin folder di server Anda sebelum melanjutkan.
+                    </p>
+                </div>
+            <?php endif; ?>
+
             <form action="/install" method="POST" class="space-y-6">
                 
                 <!-- Steps UI -->

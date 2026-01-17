@@ -54,8 +54,20 @@ fi
 # 4. Set Permissions
 echo "Step 4: Setting permissions..."
 chown -R www:www .
+chmod -R 755 .
 chmod +x mivo
 chmod -R 755 public
+
+# Ensure Database directory is writable
+if [ ! -d "app/Database" ]; then
+    mkdir -p app/Database
+    chown www:www app/Database
+fi
+chmod 775 app/Database
+if [ -f "app/Database/database.sqlite" ]; then
+    chmod 664 app/Database/database.sqlite
+fi
+
 # If there's a storage directory (MVC style usually has one)
 if [ -d "storage" ]; then
     chmod -R 775 storage
