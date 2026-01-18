@@ -1,5 +1,6 @@
 .git
 .gitignore
+.github
 .env
 node_modules
 deploy_package.tar.gz

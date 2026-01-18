@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -32,13 +34,19 @@ jobs:
           # Export source using git archive (respects .gitattributes)
           git archive --format=tar HEAD | tar -x -C release_temp
 
-      - name: Install Development Dependencies (for Build)
+      - name: Install Development Dependencies (for Build & AI)
         run: npm install
 
       - name: Build Localized Assets & Editor Bundle
         run: |
           npm run sync:assets
           npm run build:editor
+
+      - name: Generate AI Release Notes
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          node .github/scripts/generate-release-notes.js ${{ github.ref_name }}
 
       - name: Install Production Dependencies
         run: |
@@ -60,8 +68,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: mivo-v${{ steps.get_version.outputs.VERSION }}.zip
-          body_path: .github/release_template.md
-          generate_release_notes: true
+          body_path: .github/release_notes.md
+          generate_release_notes: false
           draft: false
           prerelease: false
         env:

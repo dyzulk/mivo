@@ -25,6 +25,7 @@ Thumbs.db
 # Build Scripts & Artifacts
 build_release.ps1
 deploy.ps1
+.github/release_notes.md
 
 # User Uploads
 /public/uploads/*
