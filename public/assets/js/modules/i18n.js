@@ -54,7 +54,7 @@ class I18n {
                 if (element.tagName === 'INPUT' && element.getAttribute('placeholder')) {
                     element.placeholder = translation;
                 } else {
-                    element.textContent = translation; 
+                    element.innerHTML = translation; 
                 }
             } else {
                 if (this.isLoaded) {

@@ -30,13 +30,13 @@ MIVO is a next-generation **Mikrotik Voucher Management System** with a modern M
 
 1.  **Install via Composer**
     ```bash
-    composer create-project dyzulk/mivo
+    composer create-project mivodev/mivo
     cd mivo
     ```
 
     > **Alternative (Docker):**
     > ```bash
-    > docker pull dyzulk/mivo
+    > docker pull ghcr.io/mivodev/mivo
     > ```
     > *See [INSTALLATION.md](docs/INSTALLATION.md) for more tags.*
 
@@ -83,4 +83,4 @@ If you find MIVO useful, please consider supporting its development. Your contri
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ---
-*Created by DyzulkDev*
+*Created by MivoDev*

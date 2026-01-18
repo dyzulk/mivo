@@ -140,7 +140,13 @@
         "headers": "Header Diizinkan",
         "max_age": "Max Age (detik)",
         "cpu_warning": "Nilai rendah (< 5s) dapat meningkatkan beban CPU pada router lama.",
-        "back": "Kembali ke Pengaturan"
+        "back": "Kembali ke Pengaturan",
+        "editor_shortcuts": "Shortcut Editor & Emmet",
+        "emmet_desc": "Gunakan singkatan Emmet untuk mengetik lebih cepat. Perhatikan garis bawah putus-putus, lalu tekan Tab.",
+        "tip_emmet_html": "<strong>HTML Boilerplate</strong>: Ketik <code>!</code> lalu <code>Tab</code>.",
+        "tip_emmet_tag": "<strong>Auto-Tag</strong>: Ketik <code>.container</code> lalu <code>Tab</code> untuk <code>&lt;div class=\"container\"&gt;</code>.",
+        "tip_color_picker": "<strong>Color Picker</strong>: Klik kotak warna di sebelah kode hex (misal: #ff0000) untuk membuka pemilih warna.",
+        "tip_syntax_error": "<strong>Syntax Error</strong>: Garis bawah merah (dan titik di samping angka baris) menunjukkan kesalahan struktur seperti tag yang tidak tertutup."
     },
     "routers": {
         "edit_router_title": "Edit Router",

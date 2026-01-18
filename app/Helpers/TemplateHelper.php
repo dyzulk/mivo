@@ -51,8 +51,8 @@ class TemplateHelper {
         
         $content = str_replace(array_keys($dummyData), array_values($dummyData), $content);
         
-        // QR Code replacement
-        $content = preg_replace('/\{\{\s*qrcode.*?\}\}/i', '<img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=http://hotspot.lan/login?user=u-5829" style="width:80px;height:80px;display:inline-block;">', $content);
+        // QR Code replacement - Using canvas for client-side rendering with QRious
+        $content = preg_replace('/\{\{\s*qrcode\s*(.*?)\s*\}\}/i', '<canvas class="qrcode-placeholder" data-options=\'$1\' style="width:80px;height:80px;display:inline-block;"></canvas>', $content);
 
         return $content;
     }
@@ -69,6 +69,7 @@ class TemplateHelper {
                 body { display: flex; align-items: center; justify-content: center; background-color: transparent; }
                 #wrapper { display: inline-block; transform-origin: center center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
             </style>
+            <script src="/assets/js/qrious.min.js"></script>
         </head>
         <body>
             <div id="wrapper">' . $mockContent . '</div>
@@ -76,6 +77,48 @@ class TemplateHelper {
                 window.addEventListener("load", () => {
                     const wrap = document.getElementById("wrapper");
                     if(!wrap) return;
+
+                    // Render QR Codes
+                    document.querySelectorAll(".qrcode-placeholder").forEach(canvas => {
+                        const optionsStr = canvas.dataset.options || "";
+                        const options = {};
+                        
+                        // Robust parser for "fg=red bg=#fff size=100" format
+                        const regex = /([a-z]+)=([^ \t\r\n\f\v"]+|"[^"]*"|\'[^\']*\')/gi;
+                        let match;
+                        while ((match = regex.exec(optionsStr)) !== null) {
+                            let key = match[1].toLowerCase();
+                            let val = match[2].replace(/["\']/g, "");
+                            options[key] = val;
+                        }
+
+                        new QRious({
+                            element: canvas,
+                            value: "http://hotspot.lan/login?username=u-5829&password=5912",
+                            size: parseInt(options.size) || 100,
+                            foreground: options.fg || "#000000",
+                            backgroundAlpha: 0,
+                            level: "M"
+                        });
+                        
+                        // Handle styles via CSS for better compatibility with rounding and padding
+                        if (options.size) {
+                            canvas.style.width = options.size + "px";
+                            canvas.style.height = options.size + "px";
+                        }
+                        
+                        if (options.bg) {
+                            canvas.style.backgroundColor = options.bg;
+                        }
+                        
+                        if (options.padding) {
+                            canvas.style.padding = options.padding + "px";
+                        }
+                        
+                        if (options.rounded) {
+                            canvas.style.borderRadius = options.rounded + "px";
+                        }
+                    });
                     
                     const updateScale = () => {
                         const w = wrap.offsetWidth;

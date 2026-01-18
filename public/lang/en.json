@@ -140,7 +140,13 @@
         "headers": "Allowed Headers",
         "max_age": "Max Age (seconds)",
         "cpu_warning": "Low values (< 5s) may increase CPU usage on older routers.",
-        "back": "Back to Settings"
+        "back": "Back to Settings",
+        "editor_shortcuts": "Editor Shortcuts & Emmet",
+        "emmet_desc": "Use Emmet abbreviations for fast coding. Look for the dotted underline, then press Tab.",
+        "tip_emmet_html": "<strong>HTML Boilerplate</strong>: Type <code>!</code> then <code>Tab</code>.",
+        "tip_emmet_tag": "<strong>Auto-Tag</strong>: Type <code>.container</code> then <code>Tab</code> for <code>&lt;div class=\"container\"&gt;</code>.",
+        "tip_color_picker": "<strong>Color Picker</strong>: Click the color box next to hex codes (e.g., #ff0000) to open the picker.",
+        "tip_syntax_error": "<strong>Syntax Error</strong>: Red squiggles (and dots in the gutter) show structure errors like mismatched tags."
     },
     "routers": {
         "edit_router_title": "Edit Router",

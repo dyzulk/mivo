@@ -4,7 +4,7 @@
  */
 class UpdaterModule {
     constructor() {
-        this.repo = 'dyzulk/mivo';
+        this.repo = 'mivodev/mivo';
         this.cacheKey = 'mivo_update_data';
         this.ttl = 24 * 60 * 60 * 1000; // 24 hours
         

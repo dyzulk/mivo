@@ -9,15 +9,15 @@
     <footer class="border-t border-accents-2 bg-background mt-auto transition-colors duration-200 py-8 text-center space-y-4">
         <!-- Links Row -->
         <div class="flex justify-center items-center gap-6 text-sm font-medium text-accents-5">
-            <a href="https://docs.mivo.dyzulk.com" target="_blank" class="hover:text-foreground transition-colors flex items-center gap-2">
+            <a href="https://mivodev.github.io" target="_blank" class="hover:text-foreground transition-colors flex items-center gap-2">
                 <i data-lucide="book-open" class="w-4 h-4"></i>
                 <span>Docs</span>
             </a>
-            <a href="https://github.com/dyzulk/mivo/issues" target="_blank" class="hover:text-foreground transition-colors flex items-center gap-2">
+            <a href="https://github.com/mivodev/mivo/issues" target="_blank" class="hover:text-foreground transition-colors flex items-center gap-2">
                 <i data-lucide="message-circle" class="w-4 h-4"></i>
                 <span>Community</span>
             </a>
-            <a href="https://github.com/dyzulk/mivo" target="_blank" class="hover:text-foreground transition-colors flex items-center gap-2">
+            <a href="https://github.com/mivodev/mivo" target="_blank" class="hover:text-foreground transition-colors flex items-center gap-2">
                 <i data-lucide="github" class="w-4 h-4"></i>
                 <span>Repo</span>
             </a>
@@ -306,5 +306,6 @@
             }, 300); // 300ms delay to prevent accidental closure
         }
     </script>
+    <?php \App\Core\Hooks::doAction('mivo_footer'); ?>
 </body>
 </html>

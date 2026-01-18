@@ -29,6 +29,7 @@
             document.documentElement.classList.remove('dark');
         }
     </script>
+    <?php \App\Core\Hooks::doAction('mivo_head'); ?>
 </head>
 <body class="bg-background text-foreground antialiased min-h-screen relative overflow-hidden font-sans selection:bg-accents-2 selection:text-foreground flex flex-col">
     

@@ -18,7 +18,7 @@ docker run -d \
   -e APP_ENV=production \
   -v mivo_data:/var/www/html/app/Database \
   -v mivo_config:/var/www/html/.env \
-  dyzulk/mivo:latest
+  ghcr.io/mivodev/mivo:latest
 ```
 
 Buka browser Anda dan navigasi ke `http://localhost:8080`.
@@ -33,7 +33,7 @@ Untuk pengaturan yang lebih permanen, gunakan `docker-compose.yml`:
 ```yaml
 services:
   mivo:
-    image: dyzulk/mivo:latest
+    image: ghcr.io/mivodev/mivo:latest
     container_name: mivo
     restart: unless-stopped
     ports:
@@ -74,4 +74,4 @@ Jika Anda merasa MIVO bermanfaat, harap pertimbangkan untuk mendukung pengembang
 [![SociaBuzz Tribe](https://img.shields.io/badge/SociaBuzz-Tribe-green?style=for-the-badge&logo=sociabuzz&logoColor=white)](https://sociabuzz.com/dyzulkdev/tribe)
 
 ---
-*Dibuat dengan <Icon name="Heart" color="danger" /> oleh DyzulkDev*
+*Dibuat dengan <Icon name="Heart" color="danger" /> oleh MivoDev*

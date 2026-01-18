@@ -25,9 +25,9 @@ The easiest way to run MIVO.
 2.  **Manual Pull (Alternative)**
     If you prefer to pull the image manually:
     ```bash
-    docker pull dyzulk/mivo:latest  # Stable
-    docker pull dyzulk/mivo:v1.0.0  # Specific Version
-    docker pull dyzulk/mivo:edge    # Bleeding Edge
+    docker pull ghcr.io/mivodev/mivo:latest  # Stable
+    docker pull ghcr.io/mivodev/mivo:v1.0.0  # Specific Version
+    docker pull ghcr.io/mivodev/mivo:edge    # Bleeding Edge
     ```
 
 *Note: The database is persisted in `app/Database` via volumes.*

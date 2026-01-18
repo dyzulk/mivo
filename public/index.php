@@ -30,6 +30,10 @@ require_once ROOT . '/app/Core/Autoloader.php';
 // Initialize Router
 $router = new Router();
 
+// Initialize Plugin System
+$pluginManager = new \App\Core\PluginManager();
+$pluginManager->loadPlugins();
+
 
 // Global Error Handling for Dev Mode
 if (\App\Config\SiteConfig::IS_DEV) {

@@ -5,10 +5,10 @@ class SiteConfig {
     const APP_NAME = 'MIVO';
     const APP_VERSION = 'v1.1.0';
     const APP_FULL_NAME = 'MIVO - Mikrotik Voucher';
-    const CREDIT_NAME = 'DyzulkDev';
-    const CREDIT_URL = 'https://dyzulk.com';
+    const CREDIT_NAME = 'MivoDev';
+    const CREDIT_URL = 'https://github.com/mivodev';
     const YEAR = '2026';
-    const REPO_URL = 'https://github.com/dyzulk/mivo';
+    const REPO_URL = 'https://github.com/mivodev/mivo';
     
     // Security Keys
     // Fetched from .env or fallback to default

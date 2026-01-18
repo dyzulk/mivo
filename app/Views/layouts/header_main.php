@@ -19,8 +19,8 @@ $title = isset($title) ? $title : \App\Config\SiteConfig::APP_NAME;
     <!-- Tailwind CSS (Local) -->
     <link rel="stylesheet" href="/assets/css/styles.css">
     
-    <!-- Flag Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    <!-- Flag Icons (Local) -->
+    <link rel="stylesheet" href="/assets/vendor/flag-icons/css/flag-icons.min.css" />
 
     
     <style>
@@ -114,6 +114,8 @@ $title = isset($title) ? $title : \App\Config\SiteConfig::APP_NAME;
         }
 
     </style>
+    
+    <?php \App\Core\Hooks::doAction('mivo_head'); ?>
 </head>
 <body class="flex flex-col min-h-screen bg-background text-foreground anti-aliased relative">
     <!-- Background Elements (Global Sci-Fi Grid) -->

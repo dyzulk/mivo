@@ -1,12 +1,12 @@
 {
-    "name": "dyzulk/mivo",
+    "name": "mivodev/mivo",
     "description": "MIVO - Modern Mikrotik Voucher Management System",
     "type": "project",
     "license": "MIT",
     "authors": [
         {
-            "name": "DyzulkDev",
-            "email": "dev@dyzulk.com"
+            "name": "MivoDev",
+            "email": "mivo@dev.dyzulk.com"
         }
     ],
     "require": {

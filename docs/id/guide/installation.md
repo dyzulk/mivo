@@ -25,9 +25,9 @@ Cara termudah untuk menjalankan MIVO.
 2.  **Manual Pull (Alternatif)**
     Jika Anda lebih suka menarik image secara manual:
     ```bash
-    docker pull dyzulk/mivo:latest  # Stable
-    docker pull dyzulk/mivo:v1.0.0  # Versi Spesifik
-    docker pull dyzulk/mivo:edge    # Bleeding Edge
+    docker pull ghcr.io/mivodev/mivo:latest  # Stable
+    docker pull ghcr.io/mivodev/mivo:v1.0.0  # Versi Spesifik
+    docker pull ghcr.io/mivodev/mivo:edge    # Bleeding Edge
     ```
 
 *Catatan: Database disimpan secara permanen di `app/Database` melalui volume.*

@@ -32,10 +32,24 @@ jobs:
           # Export source using git archive (respects .gitattributes)
           git archive --format=tar HEAD | tar -x -C release_temp
 
+      - name: Install Development Dependencies (for Build)
+        run: npm install
+
+      - name: Build Localized Assets & Editor Bundle
+        run: |
+          npm run sync:assets
+          npm run build:editor
+
       - name: Install Production Dependencies
         run: |
           cd release_temp
           composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-reqs
+
+      - name: Copy Build Artifacts to Release
+        run: |
+          cp -r public/assets/vendor/ release_temp/public/assets/
+          mkdir -p release_temp/public/assets/js/vendor/
+          cp public/assets/js/vendor/editor.bundle.js release_temp/public/assets/js/vendor/
 
       - name: Build Zip Artifact
         run: |

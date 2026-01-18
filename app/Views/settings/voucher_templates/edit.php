@@ -12,6 +12,13 @@ $initialContent = $template['content'] ?? '<div style="border: 1px solid #000; p
 require_once ROOT . '/app/Views/layouts/header_main.php';
 ?>
 
+<style>
+    /* Make CodeMirror fill the entire container height */
+    #editorContainer .cm-editor {
+        height: 100%;
+    }
+</style>
+
 <div class="flex flex-col lg:h-[calc(100vh-8rem)] gap-6">
     <!-- Header -->
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 flex-shrink-0">
@@ -64,7 +71,9 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
                      </div>
                 </div>
             </div>
-            <textarea id="codeEditor" name="content" form="templateForm" class="form-control flex-1 w-full font-mono text-sm resize-none h-[500px]" spellcheck="false"><?= htmlspecialchars($initialContent) ?></textarea>
+<div id="editorContainer" class="flex-1 w-full font-mono text-sm h-full min-h-0 border-none outline-none overflow-hidden bg-background"></div>
+            <!-- Hidden textarea for form submission -->
+            <textarea id="codeEditor" name="content" form="templateForm" class="hidden"><?= htmlspecialchars($initialContent) ?></textarea>
         </div>
 
         <!-- Right: Preview -->
@@ -84,6 +93,7 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
 </div>
 
 <script src="/assets/js/qrious.min.js"></script>
+<script src="/assets/js/vendor/editor.bundle.js"></script>
 </div>
 
 <!-- Documentation Modal -->
@@ -103,6 +113,18 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
         <div class="p-6 overflow-y-auto custom-scrollbar">
             <div class="prose dark:prose-invert max-w-none">
                 <p class="text-sm text-accents-5 mb-4" data-i18n="settings.variables_desc">Use these variables in your HTML source. They will be replaced with actual user data during printing.</p>
+
+                <!-- NEW: Editor Shortcuts & Emmet -->
+                <h3 class="text-sm font-bold uppercase text-accents-5 mb-2" data-i18n="settings.editor_shortcuts">Editor Shortcuts & Emmet</h3>
+                <div class="p-4 rounded bg-accents-1 border border-accents-2 mb-6">
+                    <p class="text-sm text-accents-6 mb-4" data-i18n="settings.emmet_desc">Use Emmet abbreviations for fast coding. Look for the dotted underline, then press Tab.</p>
+                    <ul class="text-sm space-y-4 list-disc list-inside text-accents-6">
+                        <li data-i18n="settings.tip_emmet_html"><strong>HTML Boilerplate</strong>: Type <code>!</code> then <code>Tab</code>.</li>
+                        <li data-i18n="settings.tip_emmet_tag"><strong>Auto-Tag</strong>: Type <code>.container</code> then <code>Tab</code> for <code>&lt;div class="container"&gt;</code>.</li>
+                        <li data-i18n="settings.tip_color_picker"><strong>Color Picker</strong>: Click the color box next to hex codes (e.g., #ff0000) to open the picker.</li>
+                        <li data-i18n="settings.tip_syntax_error"><strong>Syntax Error</strong>: Red squiggles (and dots in the gutter) show structure errors like mismatched tags.</li>
+                    </ul>
+                </div>
                 
                 <h3 class="text-sm font-bold uppercase text-accents-5 mb-2">Basic Variables</h3>
                 <div class="grid grid-cols-1 gap-2 mb-6">
@@ -201,148 +223,43 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
         }
     }
 
-    // --- Editor Logic ---
-    const editor = document.getElementById('codeEditor');
+    // --- Editor Logic (CodeMirror 6) ---
+    const textarea = document.getElementById('codeEditor');
+    const container = document.getElementById('editorContainer');
     const preview = document.getElementById('previewContainer');
+    const isDark = document.documentElement.classList.contains('dark');
     
-    // History Stack for Undo/Redo
-    let historyStack = [];
-    let redoStack = [];
-    let isTyping = false;
-    let typingTimer = null;
-    
-    // Initial State
-    historyStack.push({ value: editor.value, selectionStart: 0, selectionEnd: 0 });
+    let cmView = null;
 
-    function saveState() {
-        // Limit stack size
-        if (historyStack.length > 50) historyStack.shift();
-        
-        const lastState = historyStack[historyStack.length - 1];
-        if (lastState && lastState.value === editor.value) return; // No change
-
-        historyStack.push({
-            value: editor.value,
-            selectionStart: editor.selectionStart,
-            selectionEnd: editor.selectionEnd
-        });
-        redoStack = []; // Clear redo on new change
-    }
-
-    // Debounced save for typing
-    editor.addEventListener('input', (e) => {
-        if (!isTyping) {
-            // Save state *before* a burst of typing starts? 
-            // Actually usually we save *after*. 
-            // For robust undo: save state Before modification if possible, or assume previous state is safe.
-            // Simplified: Save debounced.
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(saveState, 500); 
-        }
-        updatePreview();
-    });
-
-    // --- Keyboard Shortcuts (Undo/Redo, Tab, Enter) ---
-    editor.addEventListener('keydown', function(e) {
-        // Undo: Ctrl+Z
-        if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
-            e.preventDefault();
-            undo();
-            return;
-        }
-        // Redo: Ctrl+Y or Ctrl+Shift+Z
-        if (((e.ctrlKey || e.metaKey) && e.key === 'y') || ((e.ctrlKey || e.metaKey) && e.key === 'z' && e.shiftKey)) {
-            e.preventDefault();
-            redo();
+    function initEditor() {
+        if (typeof MivoEditor === 'undefined') {
+            console.error('CodeMirror bundle not loaded yet.');
             return;
         }
 
-        // Tab: Insert/Remove Indent
-        if (e.key === 'Tab') {
-            e.preventDefault();
-            const start = this.selectionStart;
-            const end = this.selectionEnd;
-            const val = this.value;
-            const tabChar = "    "; // 4 spaces
-
-            if (e.shiftKey) {
-                // Un-indent (naive single line)
-                // TODO: Multiline support if needed. For now simple cursor unindent.
-                // Checking previous chars
-                // Not implemented for simplicity, just preventing focus loss.
-            } else {
-                // Insert Tab
-                // Use setRangeText to preserve browser undo buffer if mixed usage? 
-                // But we have custom undo.
-                this.value = val.substring(0, start) + tabChar + val.substring(end);
-                this.selectionStart = this.selectionEnd = start + tabChar.length;
-                saveState();
+        cmView = MivoEditor.init({
+            parent: container,
+            initialValue: textarea.value,
+            dark: isDark,
+            onChange: (val) => {
+                textarea.value = val;
                 updatePreview();
             }
-        }
+        });
 
-        // Enter: Auto-indent checking previous line
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const start = this.selectionStart;
-            const end = this.selectionEnd;
-            const val = this.value;
-            
-            // Find start of current line
-            const lineStart = val.lastIndexOf('\n', start - 1) + 1;
-            const currentLine = val.substring(lineStart, start);
-            
-            // Calculate indentation
-            const match = currentLine.match(/^\s*/);
-            const indent = match ? match[0] : '';
-            
-            const insert = '\n' + indent;
-            
-            this.value = val.substring(0, start) + insert + val.substring(end);
-            this.selectionStart = this.selectionEnd = start + insert.length;
-            
-            saveState(); // Immediate save on Enter
-            updatePreview();
-        }
-    });
-
-    function undo() {
-        if (historyStack.length > 1) { // Keep initial state
-            const current = historyStack.pop();
-            redoStack.push(current);
-            
-            const prev = historyStack[historyStack.length - 1];
-            editor.value = prev.value;
-            editor.selectionStart = prev.selectionStart;
-            editor.selectionEnd = prev.selectionEnd;
-            updatePreview();
-        }
-    }
-
-    function redo() {
-        if (redoStack.length > 0) {
-            const next = redoStack.pop();
-            historyStack.push(next);
-            
-            editor.value = next.value;
-            editor.selectionStart = next.selectionStart;
-            editor.selectionEnd = next.selectionEnd;
-            updatePreview();
-        }
+        // Set focus
+        cmView.focus();
     }
 
     function insertVar(text) {
-        saveState(); // Save state before insertion
+        if (!cmView) return;
         
-        const start = editor.selectionStart;
-        const end = editor.selectionEnd;
-        const val = editor.value;
-        editor.value = val.substring(0, start) + text + val.substring(end);
-        editor.selectionStart = editor.selectionEnd = start + text.length;
-        editor.focus();
-        
-        saveState(); // Save state after insertion
-        updatePreview();
+        const selection = cmView.state.selection.main;
+        cmView.dispatch({
+            changes: { from: selection.from, to: selection.to, insert: text },
+            selection: { anchor: selection.from + text.length }
+        });
+        cmView.focus();
     }
     
     // Live Preview Logic
@@ -368,7 +285,7 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
     };
 
     function updatePreview() {
-        let content = editor.value;
+        let content = textarea.value;
         
         // 1. Handle {{logo id=...}}
         content = content.replace(/\{\{logo\s+id=['"]?([^'"\s]+)['"]?\}\}/gi, (match, id) => {
@@ -479,10 +396,39 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
         preview.innerHTML = content;
     }
 
-    editor.addEventListener('input', updatePreview); // Handled by debouncer above too, but OK.
-    
     // Init
-    updatePreview();
+    document.addEventListener('DOMContentLoaded', () => {
+        initEditor();
+        updatePreview();
+    });
+
+    // Theme Switch Recognition
+    window.addEventListener('languageChanged', () => {
+        // Not language, but theme toggle button often triggers layout shifts. 
+        // We might need a MutationObserver if we want to live-toggle CM theme.
+        // For now, reload or manual re-init on theme toggle could work.
+    });
+
+    // Watch for theme changes globally
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class' && mutation.target === document.documentElement) {
+                // Theme changed
+                // CodeMirror 6 themes are extensions, changing them requires re-configuring the state.
+                // For simplicity, let's just re-init everything if theme changes.
+                const newIsDark = document.documentElement.classList.contains('dark');
+                if (cmView) {
+                    const content = cmView.state.doc.toString();
+                    container.innerHTML = '';
+                    cmView = null;
+                    textarea.value = content;
+                    initEditor();
+                }
+            }
+        });
+    });
+    observer.observe(document.documentElement, { attributes: true });
+
 </script>
 
 <?php require_once ROOT . '/app/Views/layouts/footer_main.php'; ?>

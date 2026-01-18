@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/dyzulk/mivo/main/public/assets/img/logo.png" alt="MIVO Logo" width="200" />
+  <img src="https://raw.githubusercontent.com/mivodev/mivo/main/public/assets/img/logo.png" alt="MIVO Logo" width="200" />
 </p>
 
 # MIVO (Mikrotik Voucher) Docker Image
@@ -24,7 +24,7 @@ docker run -d \
   -e APP_ENV=production \
   -v mivo_data:/var/www/html/app/Database \
   -v mivo_config:/var/www/html/.env \
-  dyzulk/mivo:latest
+  ghcr.io/mivodev/mivo:latest
 ```
 
 Open your browser and navigate to `http://localhost:8080`.
@@ -39,7 +39,7 @@ For a more permanent setup, use `docker-compose.yml`:
 ```yaml
 services:
   mivo:
-    image: dyzulk/mivo:latest
+    image: ghcr.io/mivodev/mivo:latest
     container_name: mivo
     restart: unless-stopped
     ports:
@@ -111,4 +111,4 @@ If you find MIVO useful, please consider supporting its development. Your contri
 [![SociaBuzz Tribe](https://img.shields.io/badge/SociaBuzz-Tribe-green?style=for-the-badge&logo=sociabuzz&logoColor=white)](https://sociabuzz.com/dyzulkdev/tribe)
 
 ---
-*Created by DyzulkDev*
+*Created by MivoDev*

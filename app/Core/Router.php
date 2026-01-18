@@ -92,6 +92,9 @@ class Router {
     }
 
     public function dispatch($uri, $method) {
+        // Fire hook to allow plugins to register routes
+        \App\Core\Hooks::doAction('router_init', $this);
+
         $path = parse_url($uri, PHP_URL_PATH);
         
         // Handle subdirectory
