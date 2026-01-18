@@ -84,6 +84,11 @@ $router->group(['middleware' => 'auth'], function($router) {
     $router->post('/settings/api-cors/update', [SettingsController::class, 'updateApiCors']);
     $router->post('/settings/api-cors/delete', [SettingsController::class, 'deleteApiCors']);
 
+    // Plugins Management
+    $router->get('/settings/plugins', [SettingsController::class, 'plugins']);
+    $router->post('/settings/plugins/upload', [SettingsController::class, 'uploadPlugin']);
+    $router->post('/settings/plugins/delete', [SettingsController::class, 'deletePlugin']);
+
 
     // -------------------------------------------------------------------------
     // Router Context Routes (Requires Auth AND Valid Router Session)
@@ -134,6 +139,7 @@ $router->group(['middleware' => 'auth'], function($router) {
 
         // Reports
         $router->get('/{session}/reports/selling', [ReportController::class, 'index']);
+        $router->get('/{session}/reports/selling/export/{type}', [ReportController::class, 'sellingExport']);
         $router->get('/{session}/reports/resume', [ReportController::class, 'resume']);
         $router->get('/{session}/reports/user-log', [LogController::class, 'index']);
 

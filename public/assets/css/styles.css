@@ -746,6 +746,12 @@ body {
   transition-duration: 200ms;
 }
 
+@media print {
+  .btn-icon {
+    color: #444;
+  }
+}
+
 .btn-icon:hover {
   background-color: rgb(255 255 255 / 0.4);
   color: var(--foreground);
@@ -800,6 +806,12 @@ body {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
+}
+
+@media print {
+  .form-label {
+    color: #444;
+  }
 }
 
 .form-label:is(.dark *) {
@@ -1009,6 +1021,12 @@ input:-webkit-autofill,
   transition-duration: 200ms;
 }
 
+@media print {
+  .input-group {
+    color: #444;
+  }
+}
+
 .input-group:focus-within {
   color: var(--foreground);
 }
@@ -1044,6 +1062,12 @@ input:-webkit-autofill,
   color: var(--accents-5);
 }
 
+@media print {
+  .input-suffix {
+    color: #444;
+  }
+}
+
 /* Merged Inputs (Side-by-side) */
 
 .input-group-merged > .form-control:not(:first-child), 
@@ -1076,6 +1100,12 @@ input:-webkit-autofill,
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+@media print {
+  .form-control-file {
+    color: #444;
+  }
 }
 
 .form-control-file::file-selector-button {
@@ -1418,6 +1448,12 @@ input:-webkit-autofill,
   transition-duration: 300ms;
 }
 
+@media print {
+  .segmented-switch-btn {
+    color: #444;
+  }
+}
+
 /* Active icon colors based on theme */
 
 /* In Light Mode: Track is light, Slider is Black. We want Active icon to be WHITE on the Slider. */
@@ -1431,6 +1467,12 @@ input:-webkit-autofill,
   color: var(--accents-5);
 }
 
+@media print {
+  .dark .theme-toggle-light-icon {
+    color: #444;
+  }
+}
+
 .dark .theme-toggle-light-icon:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
@@ -1440,6 +1482,12 @@ input:-webkit-autofill,
 
 .theme-toggle-dark-icon {
   color: var(--accents-5);
+}
+
+@media print {
+  .theme-toggle-dark-icon {
+    color: #444;
+  }
 }
 
 .theme-toggle-dark-icon:hover {
@@ -1558,6 +1606,12 @@ input:-webkit-autofill,
   color: var(--accents-5);
 }
 
+@media print {
+  .table-glass th {
+    color: #444;
+  }
+}
+
 .table-glass tbody > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
@@ -1650,6 +1704,10 @@ input:-webkit-autofill,
 
 .invisible {
   visibility: hidden;
+}
+
+.collapse {
+  visibility: collapse;
 }
 
 .static {
@@ -1796,6 +1854,10 @@ input:-webkit-autofill,
 
 .top-full {
   top: 100%;
+}
+
+.isolate {
+  isolation: isolate;
 }
 
 .z-0 {
@@ -1984,12 +2046,56 @@ input:-webkit-autofill,
   display: table;
 }
 
+.inline-table {
+  display: inline-table;
+}
+
+.table-caption {
+  display: table-caption;
+}
+
+.table-cell {
+  display: table-cell;
+}
+
+.table-column {
+  display: table-column;
+}
+
+.table-column-group {
+  display: table-column-group;
+}
+
+.table-footer-group {
+  display: table-footer-group;
+}
+
+.table-header-group {
+  display: table-header-group;
+}
+
+.table-row-group {
+  display: table-row-group;
+}
+
+.table-row {
+  display: table-row;
+}
+
 .grid {
   display: grid;
 }
 
+.inline-grid {
+  display: inline-grid;
+}
+
 .contents {
   display: contents;
+}
+
+.list-item {
+  display: list-item;
 }
 
 .hidden {
@@ -2086,10 +2192,6 @@ input:-webkit-autofill,
 
 .h-\[400px\] {
   height: 400px;
-}
-
-.h-\[500px\] {
-  height: 500px;
 }
 
 .h-\[60vw\] {
@@ -2220,6 +2322,18 @@ input:-webkit-autofill,
   width: 2.25rem;
 }
 
+.w-\[100px\] {
+  width: 100px;
+}
+
+.w-\[150px\] {
+  width: 150px;
+}
+
+.w-\[250px\] {
+  width: 250px;
+}
+
 .w-\[60vw\] {
   width: 60vw;
 }
@@ -2311,6 +2425,10 @@ input:-webkit-autofill,
 
 .\!flex-shrink-0 {
   flex-shrink: 0 !important;
+}
+
+.flex-shrink {
+  flex-shrink: 1;
 }
 
 .flex-shrink-0 {
@@ -2457,10 +2575,6 @@ input:-webkit-autofill,
   -webkit-user-select: all;
      -moz-user-select: all;
           user-select: all;
-}
-
-.resize-none {
-  resize: none;
 }
 
 .resize {
@@ -2635,8 +2749,16 @@ input:-webkit-autofill,
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
 
+.divide-accents-2 > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--accents-2);
+}
+
 .divide-white\/10 > :not([hidden]) ~ :not([hidden]) {
   border-color: rgb(255 255 255 / 0.1);
+}
+
+.self-start {
+  align-self: flex-start;
 }
 
 .self-end {
@@ -2797,6 +2919,10 @@ input:-webkit-autofill,
   border-style: none;
 }
 
+.\!border-green-500\/20 {
+  border-color: rgb(34 197 94 / 0.2) !important;
+}
+
 .\!border-red-500\/30 {
   border-color: rgb(239 68 68 / 0.3) !important;
 }
@@ -2856,6 +2982,14 @@ input:-webkit-autofill,
   border-color: rgb(239 68 68 / var(--tw-border-opacity, 1));
 }
 
+.border-red-500\/10 {
+  border-color: rgb(239 68 68 / 0.1);
+}
+
+.border-red-500\/20 {
+  border-color: rgb(239 68 68 / 0.2);
+}
+
 .border-slate-200 {
   --tw-border-opacity: 1;
   border-color: rgb(226 232 240 / var(--tw-border-opacity, 1));
@@ -2875,6 +3009,10 @@ input:-webkit-autofill,
 
 .border-white\/5 {
   border-color: rgb(255 255 255 / 0.05);
+}
+
+.\!bg-green-500\/10 {
+  background-color: rgb(34 197 94 / 0.1) !important;
 }
 
 .\!bg-red-50\/50 {
@@ -3330,6 +3468,10 @@ input:-webkit-autofill,
   padding-top: 0.5rem;
 }
 
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
 .pt-4 {
   padding-top: 1rem;
 }
@@ -3427,12 +3569,24 @@ input:-webkit-autofill,
   font-weight: 500;
 }
 
+.font-normal {
+  font-weight: 400;
+}
+
 .font-semibold {
   font-weight: 600;
 }
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
 
 .italic {
@@ -3579,6 +3733,10 @@ input:-webkit-autofill,
   color: rgb(22 163 74 / var(--tw-text-opacity, 1));
 }
 
+.text-green-600\/70 {
+  color: rgb(22 163 74 / 0.7);
+}
+
 .text-green-700 {
   --tw-text-opacity: 1;
   color: rgb(21 128 61 / var(--tw-text-opacity, 1));
@@ -3612,6 +3770,10 @@ input:-webkit-autofill,
 .text-red-400 {
   --tw-text-opacity: 1;
   color: rgb(248 113 113 / var(--tw-text-opacity, 1));
+}
+
+.text-red-400\/70 {
+  color: rgb(248 113 113 / 0.7);
 }
 
 .text-red-500 {
@@ -3663,6 +3825,14 @@ input:-webkit-autofill,
   text-decoration-line: underline;
 }
 
+.overline {
+  text-decoration-line: overline;
+}
+
+.line-through {
+  text-decoration-line: line-through;
+}
+
 .decoration-0 {
   text-decoration-thickness: 0px;
 }
@@ -3670,6 +3840,11 @@ input:-webkit-autofill,
 .antialiased {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.subpixel-antialiased {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
 }
 
 .opacity-0 {
@@ -3726,6 +3901,11 @@ input:-webkit-autofill,
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
 .outline {
   outline-style: solid;
 }
@@ -3770,6 +3950,11 @@ input:-webkit-autofill,
 
 .blur-\[120px\] {
   --tw-blur: blur(120px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.invert {
+  --tw-invert: invert(100%);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -4059,6 +4244,12 @@ div.swal2-confirm:hover {
   opacity: 0.9;
 }
 
+@media print {
+  div.swal2-confirm {
+    display: none !important;
+  }
+}
+
 div.swal2-confirm {
   border-radius: 0.5rem !important;
 }
@@ -4119,6 +4310,12 @@ div.swal2-cancel:hover {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   border-color: var(--foreground);
   background-color: var(--accents-1);
+}
+
+@media print {
+  div.swal2-cancel {
+    display: none !important;
+  }
 }
 
 div.swal2-cancel {
@@ -4348,6 +4545,85 @@ div:where(.swal2-container) div:where(.swal2-popup).swal2-premium-card {
 .dark .swal2-premium-card textarea:focus {
   background-color: rgb(0 0 0 / 0.4);
   border-color: var(--foreground);
+}
+
+@media print {
+  /* Hide Everything by default */
+
+  .no-print,
+    .navbar,
+    .sidebar, 
+    .btn,
+    .fixed,
+    nav, 
+    header,
+    footer,
+    .datatable-wrapper > div:first-child, /* Hide Datatable Header (Search/Length) */
+    .datatable-wrapper > div:last-child,  /* Hide Pagination */
+    #pagination-controls,
+    .custom-select-wrapper {
+    display: none !important;
+  }
+
+  /* Reset Body */
+
+  body {
+    background: white !important;
+    color: black !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Reset Main Content Area */
+
+  main, #main-content, .content-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+
+  /* Force Grid Columns for Cards */
+
+  .grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  /* Tables */
+
+  .table-glass {
+    border: 1px solid #ccc !important;
+    width: 100% !important;
+  }
+
+  .table-glass th, 
+    .table-glass td {
+    color: black !important;
+    border: 1px solid #ddd !important;
+    white-space: normal !important;
+    /* Allow wrapping */
+  }
+
+  /* Cards */
+
+  .card, .glass-card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    background: none !important;
+    color: black !important;
+    -moz-column-break-inside: avoid;
+         break-inside: avoid;
+  }
+
+  /* Text Colors */
+
+  .text-accents-5, .text-accents-6 {
+    color: #444 !important;
+  }
 }
 
 .selection\:bg-accents-2 *::-moz-selection {
@@ -4855,6 +5131,10 @@ div:where(.swal2-container) div:where(.swal2-popup).swal2-premium-card {
 .dark\:text-green-400:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(74 222 128 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-green-400\/70:is(.dark *) {
+  color: rgb(74 222 128 / 0.7);
 }
 
 .dark\:text-orange-400:is(.dark *) {

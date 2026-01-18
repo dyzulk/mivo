@@ -45,6 +45,32 @@ class I18n {
         }
     }
 
+
+
+    /**
+     * Extend translations at runtime (e.g. from Plugins)
+     * @param {Object} newTranslations - Nested object matching the structure
+     */
+    extend(newTranslations) {
+        // Deep merge helper
+        const deepMerge = (target, source) => {
+            for (const key in source) {
+                if (source[key] instanceof Object && key in target) {
+                    Object.assign(source[key], deepMerge(target[key], source[key]));
+                }
+            }
+            Object.assign(target || {}, source);
+            return target;
+        };
+
+        this.translations = deepMerge(this.translations, newTranslations);
+        
+        // Re-apply in case the new keys are already present in DOM
+        if (this.isLoaded) {
+            this.applyTranslations();
+        }
+    }
+
     applyTranslations() {
         document.querySelectorAll('[data-i18n]').forEach(element => {
             const key = element.getAttribute('data-i18n');

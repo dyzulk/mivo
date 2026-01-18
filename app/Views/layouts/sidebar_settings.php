@@ -14,6 +14,7 @@ $menu = [
     ['label' => 'templates_title', 'url' => '/settings/voucher-templates', 'namespace' => 'settings'],
     ['label' => 'logos_title', 'url' => '/settings/logos', 'namespace' => 'settings'],
     ['label' => 'api_cors_title', 'url' => '/settings/api-cors', 'namespace' => 'settings'],
+    ['label' => 'plugins_title', 'url' => '/settings/plugins', 'namespace' => 'settings'],
 ];
 ?>
 <nav id="settings-sidebar" class="w-full sticky top-[64px] z-40 bg-background/95 backdrop-blur border-b border-accents-2 transition-all duration-300">

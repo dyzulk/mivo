@@ -625,3 +625,72 @@ div:where(.swal2-container) div:where(.swal2-popup).swal2-premium-card {
   background-color: rgb(0 0 0 / 0.4);
   border-color: var(--foreground);
 }
+
+@media print {
+    /* Hide Everything by default */
+    .no-print,
+    .navbar,
+    .sidebar, 
+    .btn,
+    .fixed,
+    nav, 
+    header,
+    footer,
+    .datatable-wrapper > div:first-child, /* Hide Datatable Header (Search/Length) */
+    .datatable-wrapper > div:last-child,  /* Hide Pagination */
+    #pagination-controls,
+    .custom-select-wrapper {
+        display: none !important;
+    }
+
+    /* Reset Body */
+    body {
+        background: white !important;
+        color: black !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+    }
+
+    /* Reset Main Content Area */
+    main, #main-content, .content-wrapper {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        overflow: visible !important;
+    }
+
+    /* Force Grid Columns for Cards */
+    .grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+    }
+    
+    /* Tables */
+    .table-glass {
+        border: 1px solid #ccc !important;
+        width: 100% !important;
+    }
+    .table-glass th, 
+    .table-glass td {
+        color: black !important;
+        border: 1px solid #ddd !important;
+        white-space: normal !important; /* Allow wrapping */
+    }
+
+    /* Cards */
+    .card, .glass-card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        background: none !important;
+        color: black !important;
+        break-inside: avoid;
+    }
+    
+    /* Text Colors */
+    .text-accents-5, .text-accents-6 {
+        color: #444 !important;
+    }
+}

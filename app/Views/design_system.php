@@ -4,7 +4,7 @@
     <div class="flex items-center justify-between mb-8">
         <div>
             <h1 class="text-3xl font-bold tracking-tight">Design System</h1>
-            <p class="text-accents-5">Component library and style guide for Mikhmon v3.</p>
+            <p class="text-accents-5">Component library and style guide for Mivo.</p>
         </div>
         <div class="flex gap-2">
             <button onclick="document.documentElement.classList.remove('dark')" class="btn bg-gray-200 text-gray-800">Light</button>

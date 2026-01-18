@@ -326,6 +326,30 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
             setInterval(fetchTraffic, reloadInterval); 
             fetchTraffic();
         });
+
+        // Localization Support
+        const updateChartLabels = () => {
+            if (window.i18n && window.i18n.isLoaded) {
+                const rxLabel = window.i18n.t('dashboard.rx_download');
+                const txLabel = window.i18n.t('dashboard.tx_upload');
+                
+                // Only update if changed
+                if (chart.data.datasets[0].label !== rxLabel || chart.data.datasets[1].label !== txLabel) {
+                    chart.data.datasets[0].label = rxLabel;
+                    chart.data.datasets[1].label = txLabel;
+                    chart.update('none');
+                }
+            }
+        };
+
+        // Listen for language changes
+        if (window.Mivo) {
+            window.Mivo.on('languageChanged', updateChartLabels);
+        }
+        window.addEventListener('languageChanged', updateChartLabels);
+        
+        // Try initial update after a short delay to ensure i18n is ready if race condition
+        setTimeout(updateChartLabels, 500); 
     });
 </script>
 

@@ -1,5 +1,5 @@
 @echo off
-echo Starting Mikhmon v3 Remake Development Server...
+echo Starting Mivo Remake Development Server...
 echo.
 echo Local: http://localhost:8000
 echo Network URLs (Check below):

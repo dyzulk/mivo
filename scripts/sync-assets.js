@@ -48,4 +48,18 @@ if (fs.existsSync(flagIconsSrc)) {
     console.error('✗ flag-icons not found in node_modules.');
 }
 
+// 2. Localize SheetJS (xlsx)
+console.log('Localizing xlsx...');
+const xlsxSrc = path.join(projectRoot, 'node_modules', 'xlsx', 'dist', 'xlsx.full.min.js');
+const xlsxDestDir = path.join(publicVendor, 'xlsx');
+
+if (fs.existsSync(xlsxSrc)) {
+    if (!fs.existsSync(xlsxDestDir)) fs.mkdirSync(xlsxDestDir, { recursive: true });
+    
+    fs.copyFileSync(xlsxSrc, path.join(xlsxDestDir, 'xlsx.full.min.js'));
+    console.log('✓ xlsx localized.');
+} else {
+    console.error('✗ xlsx not found in node_modules.');
+}
+
 console.log('Asset synchronization complete.');

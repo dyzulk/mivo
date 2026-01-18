@@ -276,12 +276,12 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
         '{{timelimit}}': ' 3 Hours',
         '{{datalimit}}': '500 MB',
         '{{profile}}': 'General',
-        '{{comment}}': 'mikhmon',
-        '{{hotspotname}}': 'Mikhmon Hotspot',
+        '{{comment}}': 'mivo',
+        '{{hotspotname}}': 'Mivo Hotspot',
         '{{num}}': '1',
         '{{logo}}': '<img src="/assets/img/logo.png" style="height:30px;border:0;">', // Default placeholder
-        '{{dns_name}}': 'hotspot.mikhmon', 
-        '{{login_url}}': 'http://hotspot.mikhmon/login',
+        '{{dns_name}}': 'hotspot.mivo', 
+        '{{login_url}}': 'http://hotspot.mivo/login',
     };
 
     function updatePreview() {

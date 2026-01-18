@@ -22,10 +22,6 @@ Thumbs.db
 # Secrets and Environment
 .env
 
-# VitePress
-docs/.vitepress/dist
-docs/.vitepress/cache
-
 # Build Scripts & Artifacts
 build_release.ps1
 deploy.ps1
@@ -33,3 +29,6 @@ deploy.ps1
 # User Uploads
 /public/uploads/*
 !/public/uploads/.gitignore
+
+# Plugins
+/plugins/*

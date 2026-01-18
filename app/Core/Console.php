@@ -45,7 +45,7 @@ class Console {
 
     private function printBanner() {
         echo "\n";
-        echo self::COLOR_BOLD . "  MIVO Helper " . self::COLOR_RESET . self::COLOR_GRAY . "v1.1.0" . self::COLOR_RESET . "\n\n";
+        echo self::COLOR_BOLD . "  MIVO Helper " . self::COLOR_RESET . self::COLOR_GRAY . \App\Config\SiteConfig::APP_VERSION . self::COLOR_RESET . "\n\n";
     }
 
     private function commandServe($args) {
@@ -171,7 +171,7 @@ class Console {
         
         if (file_exists($envPath)) {
             $envIds = parse_ini_file($envPath);
-            if (!empty($envIds['APP_KEY']) && $envIds['APP_KEY'] !== 'mikhmonv3remake_secret_key_32bytes') {
+            if (!empty($envIds['APP_KEY']) && $envIds['APP_KEY'] !== 'mivo_official_secret_key_32bytes') {
                 $keyExists = true;
             }
         }

@@ -44,7 +44,7 @@ class InstallController extends Controller {
             Migrations::up();
             
             // 2. Generate Key if default
-            if (SiteConfig::getSecretKey() === 'mikhmonv3remake_secret_key_32bytes') {
+            if (SiteConfig::getSecretKey() === 'mivo_official_secret_key_32bytes') {
                 $this->generateKey();
             }
             
@@ -90,11 +90,11 @@ class InstallController extends Controller {
         $envPath = ROOT . '/.env';
         if (!file_exists($envPath)) {
             // Check if SiteConfig has a manual override (legacy)
-            return SiteConfig::getSecretKey() !== 'mikhmonv3remake_secret_key_32bytes';
+            return SiteConfig::getSecretKey() !== 'mivo_official_secret_key_32bytes';
         }
         
         $key = getenv('APP_KEY');
-        $keyChanged = ($key && $key !== 'mikhmonv3remake_secret_key_32bytes');
+        $keyChanged = ($key && $key !== 'mivo_official_secret_key_32bytes');
         
         try {
             $db = Database::getInstance();

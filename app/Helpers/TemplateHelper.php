@@ -46,7 +46,7 @@ class TemplateHelper {
             '{{ip_address}}' => '192.168.88.254',
             '{{mac_address}}' => 'AA:BB:CC:DD:EE:FF',
             '{{comment}}' => 'Thank You',
-            '{{copyright}}' => 'Mikhmon',
+            '{{copyright}}' => 'Mivo',
         ];
         
         $content = str_replace(array_keys($dummyData), array_values($dummyData), $content);

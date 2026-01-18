@@ -77,7 +77,7 @@ class SettingsController extends Controller {
             $db = \App\Core\Database::getInstance();
             $hash = password_hash($newPassword, PASSWORD_DEFAULT);
             // Assuming we are updating the default 'admin' user or the currently logged in user
-            // Original Mikhmon usually has one main user. Let's update 'admin' for now.
+            // Original Mivo usually has one main user. Let's update 'admin' for now.
             $db->query("UPDATE users SET password = ? WHERE username = 'admin'", [$hash]);
             \App\Helpers\FlashHelper::set('success', 'toasts.password_updated', 'toasts.password_updated_desc', [], true);
         }
@@ -431,4 +431,194 @@ class SettingsController extends Controller {
         }
         header('Location: /settings/api-cors');
     }
+
+    // --- Plugin Management ---
+
+    public function plugins() {
+        $pluginManager = new \App\Core\PluginManager();
+        // Since PluginManager loads everything in constructor/loadPlugins, 
+        // we can just scan the directory to list them and check status (implied active for now)
+        $pluginsDir = ROOT . '/plugins';
+        $plugins = [];
+        
+        if (is_dir($pluginsDir)) {
+            $folders = scandir($pluginsDir);
+            foreach ($folders as $folder) {
+                if ($folder === '.' || $folder === '..') continue;
+                
+                $path = $pluginsDir . '/' . $folder;
+                if (is_dir($path) && file_exists($path . '/plugin.php')) {
+                     // Try to read header from plugin.php
+                     $content = file_get_contents($path . '/plugin.php', false, null, 0, 1024); // Read first 1KB
+                     preg_match('/Plugin Name:\s*(.*)$/mi', $content, $nameMatch);
+                     preg_match('/Version:\s*(.*)$/mi', $content, $verMatch);
+                     preg_match('/Description:\s*(.*)$/mi', $content, $descMatch);
+                     preg_match('/Author:\s*(.*)$/mi', $content, $authMatch);
+
+                     $plugins[] = [
+                         'id' => $folder,
+                         'name' => trim($nameMatch[1] ?? $folder),
+                         'version' => trim($verMatch[1] ?? '1.0.0'),
+                         'description' => trim($descMatch[1] ?? '-'),
+                         'author' => trim($authMatch[1] ?? '-'),
+                         'path' => $path
+                     ];
+                }
+            }
+        }
+
+        return $this->view('settings/plugins', ['plugins' => $plugins]);
+    }
+
+    public function uploadPlugin() {
+        if (!isset($_FILES['plugin_file']) || $_FILES['plugin_file']['error'] !== UPLOAD_ERR_OK) {
+             \App\Helpers\FlashHelper::set('error', 'toasts.upload_failed', 'toasts.no_file_selected', [], true);
+             header('Location: /settings/plugins');
+             exit;
+        }
+
+        $file = $_FILES['plugin_file'];
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if ($ext !== 'zip') {
+             \App\Helpers\FlashHelper::set('error', 'toasts.upload_failed', 'Only .zip files are allowed', [], true);
+             header('Location: /settings/plugins');
+             exit;
+        }
+
+        $zip = new \ZipArchive();
+        if ($zip->open($file['tmp_name']) === TRUE) {
+            $extractPath = ROOT . '/plugins/';
+            if (!is_dir($extractPath)) mkdir($extractPath, 0755, true);
+
+            // TODO: Better validation to prevent overwriting existing plugins without confirmation?
+            // For now, extraction overwrites.
+            
+            // Validate content before extracting everything
+            // Check if zip has a root folder or just files
+            // Logic: 
+            // 1. Extract to temp.
+            // 2. Find plugin.php
+            // 3. Move to plugins dir.
+            
+            $tempExtract = sys_get_temp_dir() . '/mivo_plugin_' . uniqid();
+            if (!mkdir($tempExtract, 0755, true)) {
+                 \App\Helpers\FlashHelper::set('error', 'toasts.upload_failed', 'Failed to create temp dir', [], true);
+                 header('Location: /settings/plugins');
+                 exit;
+            }
+
+            $zip->extractTo($tempExtract);
+            $zip->close();
+
+            // Search for plugin.php
+            $pluginFile = null;
+            $pluginRoot = $tempExtract;
+            
+            // Recursive iterator to find plugin.php (max depth 2 to avoid deep scanning)
+            $rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($tempExtract));
+            foreach ($rii as $file) {
+                if ($file->isDir()) continue;
+                if ($file->getFilename() === 'plugin.php') {
+                    $pluginFile = $file->getPathname();
+                    $pluginRoot = dirname($pluginFile);
+                    break; 
+                }
+            }
+
+            if ($pluginFile) {
+                // Determine destination name
+                // If the immediate parent of plugin.php is NOT the temp dir, use that folder name.
+                // Else use the zip name.
+                $folderName = basename($pluginRoot);
+                if ($pluginRoot === $tempExtract) {
+                    $folderName = pathinfo($_FILES['plugin_file']['name'], PATHINFO_FILENAME);
+                }
+
+                $dest = $extractPath . $folderName;
+                
+                // Move/Copy
+                // Using helper or rename. Rename might fail across volumes (temp to project).
+                // Use custom recursive copy then delete temp.
+                $this->recurseCopy($pluginRoot, $dest);
+                
+                \App\Helpers\FlashHelper::set('success', 'toasts.plugin_installed', 'toasts.plugin_installed_desc', ['name' => $folderName], true);
+            } else {
+                \App\Helpers\FlashHelper::set('error', 'toasts.install_failed', 'toasts.invalid_plugin_desc', [], true);
+            }
+
+            // Cleanup
+            $this->recurseDelete($tempExtract);
+
+        } else {
+             \App\Helpers\FlashHelper::set('error', 'toasts.upload_failed', 'toasts.zip_open_failed_desc', [], true);
+        }
+
+        header('Location: /settings/plugins');
+    }
+
+    public function deletePlugin() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+             header('Location: /settings/plugins');
+             exit;
+        }
+
+        $id = $_POST['plugin_id'] ?? '';
+        if (empty($id)) {
+            \App\Helpers\FlashHelper::set('error', 'common.error', 'Invalid plugin ID', [], true);
+             header('Location: /settings/plugins');
+             exit;
+        }
+
+        // Security check: validate id is just a folder name, no path traversal
+        if (!preg_match('/^[a-zA-Z0-9_-]+$/', $id)) {
+            \App\Helpers\FlashHelper::set('error', 'common.error', 'Invalid plugin ID format', [], true);
+             header('Location: /settings/plugins');
+             exit;
+        }
+
+        $pluginDir = ROOT . '/plugins/' . $id;
+
+        if (is_dir($pluginDir)) {
+            $this->recurseDelete($pluginDir);
+            \App\Helpers\FlashHelper::set('success', 'toasts.plugin_deleted', 'toasts.plugin_deleted_desc', [], true);
+        } else {
+            \App\Helpers\FlashHelper::set('error', 'common.error', 'Plugin directory not found', [], true);
+        }
+
+        header('Location: /settings/plugins');
+        exit;
+    }
+    
+    // Helper for recursive copy (since rename/move_uploaded_file limit across partitions)
+    private function recurseCopy($src, $dst) {
+        $dir = opendir($src);
+        @mkdir($dst);
+        while(false !== ( $file = readdir($dir)) ) {
+            if (( $file != '.' ) && ( $file != '..' )) {
+                if ( is_dir($src . '/' . $file) ) {
+                    $this->recurseCopy($src . '/' . $file,$dst . '/' . $file);
+                }
+                else {
+                    copy($src . '/' . $file,$dst . '/' . $file);
+                }
+            }
+        }
+        closedir($dir);
+    }
+    
+    private function recurseDelete($dir) {
+        if (!is_dir($dir)) return;
+        $scan = scandir($dir);
+        foreach ($scan as $file) {
+            if ($file == '.' || $file == '..') continue;
+            if (is_dir($dir . "/" . $file)) {
+                $this->recurseDelete($dir . "/" . $file);
+            } else {
+                unlink($dir . "/" . $file);
+            }
+        }
+        rmdir($dir);
+    }
+
 }

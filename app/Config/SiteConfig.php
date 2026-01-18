@@ -3,7 +3,7 @@ namespace App\Config;
 
 class SiteConfig {
     const APP_NAME = 'MIVO';
-    const APP_VERSION = 'v1.1.1';
+    const APP_VERSION = 'v1.2.0';
     const APP_FULL_NAME = 'MIVO - Mikrotik Voucher';
     const CREDIT_NAME = 'MivoDev';
     const CREDIT_URL = 'https://github.com/mivodev';
@@ -13,7 +13,7 @@ class SiteConfig {
     // Security Keys
     // Fetched from .env or fallback to default
     public static function getSecretKey() {
-        return getenv('APP_KEY') ?: 'mikhmonv3remake_secret_key_32bytes';
+        return getenv('APP_KEY') ?: 'mivo_official_secret_key_32bytes';
     }
 
     const IS_DEV = true; // Still useful for code logic not relying on env yet, or can be refactored too.

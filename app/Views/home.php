@@ -3,8 +3,8 @@
 <div class="w-full max-w-4xl mx-auto py-8 md:py-16 px-4 sm:px-6 text-center">
     <div class="mb-8 flex justify-center">
         <div class="h-16 w-16 bg-transparent rounded-full flex items-center justify-center">
-            <img src="/assets/img/logo-m.svg" alt="Mikhmon Logo" class="h-16 w-auto block dark:hidden">
-            <img src="/assets/img/logo-m-dark.svg" alt="Mikhmon Logo" class="h-16 w-auto hidden dark:block">
+            <img src="/assets/img/logo-m.svg" alt="Mivo Logo" class="h-16 w-auto block dark:hidden">
+            <img src="/assets/img/logo-m-dark.svg" alt="Mivo Logo" class="h-16 w-auto hidden dark:block">
         </div>
     </div>
     

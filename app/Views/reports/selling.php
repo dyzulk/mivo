@@ -9,197 +9,182 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
         <p class="text-accents-5"><span data-i18n="reports.selling_subtitle">Sales summary and details for:</span> <span class="text-foreground font-medium"><?= htmlspecialchars($session) ?></span></p>
     </div>
     <div class="flex gap-2">
-         <button onclick="location.reload()" class="btn btn-secondary">
+        <div class="dropdown dropdown-end relative" id="export-dropdown">
+            <button class="btn btn-secondary dropdown-toggle" onclick="document.getElementById('export-menu').classList.toggle('hidden')">
+                <i data-lucide="download" class="w-4 h-4 mr-2"></i> <span data-i18n="reports.export">Export</span>
+                <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+            </button>
+            <div id="export-menu" class="dropdown-menu hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-black border border-accents-2 z-50 p-1">
+                <button onclick="exportReport('csv')" class="block w-full text-left px-4 py-2 text-sm text-foreground hover:bg-accents-1 rounded flex items-center">
+                    <i data-lucide="file-text" class="w-4 h-4 mr-2 text-green-600"></i> Export CSV
+                </button>
+                <button onclick="exportReport('xlsx')" class="block w-full text-left px-4 py-2 text-sm text-foreground hover:bg-accents-1 rounded flex items-center">
+                    <i data-lucide="sheet" class="w-4 h-4 mr-2 text-green-600"></i> Export Excel
+                </button>
+            </div>
+        </div>
+        <button onclick="location.reload()" class="btn btn-secondary">
             <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i> <span data-i18n="reports.refresh">Refresh</span>
         </button>
         <button onclick="window.print()" class="btn btn-primary">
             <i data-lucide="printer" class="w-4 h-4 mr-2"></i> <span data-i18n="reports.print_report">Print Report</span>
         </button>
     </div>
+    </div>
 </div>
 
 <!-- Summary Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-    <div class="card bg-accents-1 border-accents-2">
-        <div class="text-sm text-accents-5 uppercase font-bold tracking-wide" data-i18n="reports.total_income">Total Income</div>
-        <div class="text-3xl font-bold text-green-500 mt-2">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <!-- Stock / Potential -->
+    <div class="card">
+        <div class="text-sm text-accents-5 uppercase font-bold tracking-wide" data-i18n="reports.generated_stock">Generated Stock</div>
+        <div class="text-3xl font-bold text-accents-6 mt-2">
             <?= \App\Helpers\FormatHelper::formatCurrency($totalIncome, $currency) ?>
         </div>
+        <div class="text-xs text-accents-5 mt-1">
+            <?= number_format($totalVouchers) ?> vouchers
+        </div>
     </div>
-    <div class="card bg-accents-1 border-accents-2">
-        <div class="text-sm text-accents-5 uppercase font-bold tracking-wide" data-i18n="reports.total_vouchers">Total Vouchers Sold</div>
-        <div class="text-3xl font-bold text-blue-500 mt-2">
-            <?= number_format($totalVouchers, 0, ',', '.') ?>
+    
+    <!-- Realized / Actual -->
+    <div class="card !bg-green-500/10 !border-green-500/20">
+        <div class="text-sm text-green-600 dark:text-green-400 uppercase font-bold tracking-wide" data-i18n="reports.realized_income">Realized Income</div>
+        <div class="text-3xl font-bold text-green-600 dark:text-green-400 mt-2">
+            <?= \App\Helpers\FormatHelper::formatCurrency($totalRealizedIncome ?? 0, $currency) ?>
+        </div>
+        <div class="text-xs text-green-600/70 dark:text-green-400/70 mt-1">
+            <?= number_format($totalUsedVouchers ?? 0) ?> used
         </div>
     </div>
 </div>
 
 <div class="space-y-4">
-    <!-- Filter Bar -->
-    <div class="flex flex-col md:flex-row gap-4 justify-between items-center no-print">
-        <!-- Search -->
-        <div class="relative w-full md:w-64">
-             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <i data-lucide="search" class="h-4 w-4 text-accents-5"></i>
-            </div>
-            <input type="text" id="global-search" class="form-input pl-10 w-full" placeholder="Search date..." data-i18n-placeholder="common.table.search_placeholder">
-        </div>
-    </div>
-
     <!-- Detailed Table -->
-    <div class="table-container">
-        <table class="table-glass" id="report-table">
-            <thead>
+    <table class="table-glass" id="report-table">
+        <thead>
+            <tr>
+                <th data-sort="date" data-i18n="reports.date_batch">Date / Batch (Comment)</th>
+                <th data-i18n="reports.status">Status</th>
+                <th class="text-right" data-i18n="reports.qty">Qty (Stock)</th>
+                <th class="text-right text-green-500" data-i18n="reports.used">Used</th>
+                <th data-sort="total" class="text-right" data-i18n="reports.total_stock">Total Stock</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <?php if (empty($report)): ?>
                 <tr>
-                    <th data-sort="date" class="sortable cursor-pointer hover:text-foreground select-none" data-i18n="reports.date_batch">Date / Batch (Comment)</th>
-                    <th class="text-right" data-i18n="reports.qty">Qty</th>
-                    <th data-sort="total" class="sortable text-right cursor-pointer hover:text-foreground select-none" data-i18n="reports.total">Total</th>
+                    <td colspan="5" class="p-8 text-center text-accents-5" data-i18n="reports.no_data">No sales data found.</td>
                 </tr>
-            </thead>
-            <tbody id="table-body">
-                <?php if (empty($report)): ?>
-                    <tr>
-                        <td colspan="3" class="p-8 text-center text-accents-5" data-i18n="reports.no_data">No sales data found.</td>
+            <?php else: ?>
+                <?php foreach ($report as $row): ?>
+                    <tr class="table-row-item">
+                        <td class="font-medium">
+                            <?= htmlspecialchars($row['date']) ?>
+                        </td>
+                        <td>
+                            <?php if($row['status'] === 'New'): ?>
+                                <span class="px-2 py-1 text-xs font-bold rounded-md bg-accents-2 text-accents-6">NEW</span>
+                            <?php elseif($row['status'] === 'Selling'): ?>
+                                <span class="px-2 py-1 text-xs font-bold rounded-md bg-blue-500/10 text-blue-500 border border-blue-500/20">SELLING</span>
+                            <?php elseif($row['status'] === 'Sold Out'): ?>
+                                <span class="px-2 py-1 text-xs font-bold rounded-md bg-green-500/10 text-green-500 border border-green-500/20">SOLD OUT</span>
+                            <?php endif; ?>
+                        </td>
+                        <td class="text-right font-mono text-accents-6">
+                            <?= number_format($row['count']) ?>
+                        </td>
+                        <td class="text-right font-mono text-green-500 font-medium">
+                            <?= number_format($row['realized_count']) ?>
+                            <span class="text-xs opacity-70 block">
+                                <?= \App\Helpers\FormatHelper::formatCurrency($row['realized_total'], $currency) ?>
+                            </span>
+                        </td>
+                        <td class="text-right font-mono font-bold text-foreground">
+                            <?= \App\Helpers\FormatHelper::formatCurrency($row['total'], $currency) ?>
+                        </td>
                     </tr>
-                <?php else: ?>
-                    <?php foreach ($report as $row): ?>
-                        <tr class="table-row-item"
-                            data-date="<?= strtolower($row['date']) ?>"
-                            data-total="<?= $row['total'] ?>">
-                            <td class="font-medium"><?= htmlspecialchars($row['date']) ?></td>
-                            <td class="text-right font-mono"><?= number_format($row['count']) ?></td>
-                            <td class="text-right font-mono font-bold text-foreground">
-                                <?= \App\Helpers\FormatHelper::formatCurrency($row['total'], $currency) ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
-        
-        <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-white/10 flex items-center justify-between no-print" id="pagination-controls">
-            <div class="text-sm text-accents-5">
-                Showing <span id="start-idx" class="font-medium text-foreground">0</span> to <span id="end-idx" class="font-medium text-foreground">0</span> of <span id="total-count" class="font-medium text-foreground">0</span> rows
-            </div>
-            <div class="flex gap-2">
-                <button id="prev-btn" class="btn btn-sm btn-secondary" disabled data-i18n="common.previous">Previous</button>
-                <div id="page-numbers" class="flex gap-1"></div>
-                <button id="next-btn" class="btn btn-sm btn-secondary" disabled data-i18n="common.next">Next</button>
-            </div>
-        </div>
-    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
 </div>
 
+
+<script src="/assets/js/components/datatable.js"></script>
+<!-- Local SheetJS Library -->
+<script src="/assets/vendor/xlsx/xlsx.full.min.js"></script>
+
 <script>
-    class TableManager {
-        constructor(rows, itemsPerPage = 15) {
-            this.allRows = Array.from(rows);
-            this.filteredRows = this.allRows;
-            this.itemsPerPage = itemsPerPage;
-            this.currentPage = 1;
-
-            this.elements = {
-                body: document.getElementById('table-body'),
-                startIdx: document.getElementById('start-idx'),
-                endIdx: document.getElementById('end-idx'),
-                totalCount: document.getElementById('total-count'),
-                prevBtn: document.getElementById('prev-btn'),
-                nextBtn: document.getElementById('next-btn'),
-                pageNumbers: document.getElementById('page-numbers')
-            };
-
-            this.filters = { search: '' };
-            this.init();
-        }
-
-        init() {
-            // Translate placeholder
-            const searchInput = document.getElementById('global-search');
-            if (searchInput && window.i18n) {
-                searchInput.placeholder = window.i18n.t('common.table.search_placeholder');
-            }
-            document.getElementById('global-search').addEventListener('input', (e) => {
-                this.filters.search = e.target.value.toLowerCase();
-                this.currentPage = 1;
-                this.update();
-            });
-            
-            this.elements.prevBtn.addEventListener('click', () => { if(this.currentPage > 1) { this.currentPage--; this.render(); } });
-            this.elements.nextBtn.addEventListener('click', () => { 
-                const max = Math.ceil(this.filteredRows.length / this.itemsPerPage);
-                if(this.currentPage < max) { this.currentPage++; this.render(); } 
-            });
-
-            this.update();
-
-            // Listen for language change
-            window.addEventListener('languageChanged', () => {
-                const searchInput = document.getElementById('global-search');
-                if (searchInput && window.i18n) {
-                    searchInput.placeholder = window.i18n.t('common.table.search_placeholder');
-                }
-                this.render();
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof SimpleDataTable !== 'undefined') {
+            new SimpleDataTable('#report-table', { 
+                itemsPerPage: 15, 
+                searchable: true,
+                pagination: true,
+                // Add Filter for Status Column (Index 1)
+                filters: [
+                    { index: 1, label: 'Status: All' }
+                ]
             });
         }
+    });
 
-        update() {
-            this.filteredRows = this.allRows.filter(row => {
-                const date = row.dataset.date || '';
-                
-                if (this.filters.search && !date.includes(this.filters.search)) return false;
-                
-                return true;
-            });
-            this.render();
-        }
+    async function exportReport(type) {
+        const url = '/<?= $session ?>/reports/selling/export/' + type;
+        const btn = document.querySelector('.dropdown-toggle');
+        const originalText = btn.innerHTML;
+        
+        // Show Loading State
+        btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i> Processing...`;
+        lucide.createIcons();
 
-        render() {
-            const total = this.filteredRows.length;
-            const maxPage = Math.ceil(total / this.itemsPerPage) || 1;
-            if (this.currentPage > maxPage) this.currentPage = maxPage;
-            
-            const start = (this.currentPage - 1) * this.itemsPerPage;
-            const end = Math.min(start + this.itemsPerPage, total);
-            
-            this.elements.startIdx.textContent = total === 0 ? 0 : start + 1;
-            this.elements.endIdx.textContent = end;
-            this.elements.totalCount.textContent = total;
-            
-             // Update Text (Use Translation)
-            if (window.i18n && document.getElementById('pagination-controls')) {
-                 const text = window.i18n.t('common.table.showing', {
-                    start: total === 0 ? 0 : start + 1,
-                    end: end,
-                    total: total
-                });
-                // Find and update the text node if possible
-                const container = document.getElementById('pagination-controls').querySelector('.text-accents-5');
-                 if(container) {
-                      container.innerHTML = text.replace('{start}', `<span class="font-medium text-foreground">${total === 0 ? 0 : start + 1}</span>`)
-                                                .replace('{end}', `<span class="font-medium text-foreground">${end}</span>`)
-                                                .replace('{total}', `<span class="font-medium text-foreground">${total}</span>`);
-                 }
-            }
-            
-            this.elements.body.innerHTML = '';
-            this.filteredRows.slice(start, end).forEach(row => this.elements.body.appendChild(row));
-            
-            this.elements.prevBtn.disabled = this.currentPage === 1;
-            this.elements.nextBtn.disabled = this.currentPage === maxPage || total === 0;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
 
-            if (this.elements.pageNumbers) {
-                 const pageText = window.i18n ? window.i18n.t('common.page_of', {current: this.currentPage, total: maxPage}) : `Page ${this.currentPage} of ${maxPage}`;
-                this.elements.pageNumbers.innerHTML = `<span class="px-3 py-1 text-sm font-medium bg-accents-2 rounded text-accents-6">${pageText}</span>`;
+            if (data.error) {
+                alert('Export Failed: ' + data.error);
+                return;
             }
 
-            if (typeof lucide !== 'undefined') lucide.createIcons();
+            const filename = `selling-report-<?= date('Y-m-d') ?>-${type}.` + (type === 'csv' ? 'csv' : 'xlsx');
+
+            if (type === 'csv') {
+                // Convert JSON to CSV
+                const header = Object.keys(data[0]);
+                const csv = [
+                    header.join(','), // header row first
+                    ...data.map(row => header.map(fieldName => JSON.stringify(row[fieldName])).join(','))
+                ].join('\r\n');
+
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.setAttribute('hidden', '');
+                a.setAttribute('href', url);
+                a.setAttribute('download', filename);
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } 
+            else if (type === 'xlsx') {
+                // Use SheetJS for Real Excel
+                const ws = XLSX.utils.json_to_sheet(data);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Selling Report");
+                XLSX.writeFile(wb, filename);
+            }
+
+        } catch (error) {
+            console.error('Export Error:', error);
+            alert('Failed to export data. Check console for details.');
+        } finally {
+            // Restore Button
+            btn.innerHTML = originalText;
+            lucide.createIcons();
+            document.getElementById('export-menu').classList.add('hidden');
         }
     }
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        new TableManager(document.querySelectorAll('.table-row-item'), 15);
-    });
 </script>
 
 <?php require_once ROOT . '/app/Views/layouts/footer_main.php'; ?>

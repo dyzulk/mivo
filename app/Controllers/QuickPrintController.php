@@ -191,10 +191,10 @@ class QuickPrintController extends Controller {
                  // Check if M or G
                  // Simple logic for now, assuming raw if number, or passing string if Mikrotik accepts it (usually requires bytes)
                  // Let's assume user inputs "100M" or "1G" which usually needs parsing. 
-                 // For now, let's assume input is NUMBER in MB as per standard Mikhmon practice, OR generic string.
+                 // For now, let's assume input is NUMBER in MB as per standard Mivo practice, OR generic string.
                  // We'll pass as is for strings, or multiply if strictly numeric? 
                  // Let's rely on standard Mikrotik parsing if string passed, or convert.
-                 // Mikhmon v3 usually uses dropdown "MB/GB". 
+                 // Mivo usually uses dropdown "MB/GB". 
                  // Implementing simple conversion:
                  $val = intval($package['data_limit']);
                  if (strpos(strtolower($package['data_limit']), 'g') !== false) {

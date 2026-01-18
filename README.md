@@ -36,9 +36,9 @@ MIVO is a next-generation **Mikrotik Voucher Management System** with a modern M
 
     > **Alternative (Docker):**
     > ```bash
-    > docker pull ghcr.io/mivodev/mivo
+    > docker pull mivodev/mivo
     > ```
-    > *See [INSTALLATION.md](docs/INSTALLATION.md) for more tags.*
+    > *See [DOCKER_README.md](DOCKER_README.md) for more tags.*
 
 2.  **Setup Environment**
     ```bash

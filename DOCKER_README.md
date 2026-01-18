@@ -24,7 +24,7 @@ docker run -d \
   -e APP_ENV=production \
   -v mivo_data:/var/www/html/app/Database \
   -v mivo_config:/var/www/html/.env \
-  ghcr.io/mivodev/mivo:latest
+  mivodev/mivo:latest
 ```
 
 Open your browser and navigate to `http://localhost:8080`.
@@ -39,7 +39,7 @@ For a more permanent setup, use `docker-compose.yml`:
 ```yaml
 services:
   mivo:
-    image: ghcr.io/mivodev/mivo:latest
+    image: mivodev/mivo:latest
     container_name: mivo
     restart: unless-stopped
     ports:

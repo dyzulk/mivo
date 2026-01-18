@@ -5,7 +5,7 @@ namespace App\Helpers;
 class HotspotHelper
 {
     /**
-     * Parse profile on-login script metadata (Mikhmon format)
+     * Parse profile on-login script metadata (Standard format)
      * Format: :put (",mode,price,validity,selling_price,lock_user,")
      */
     public static function parseProfileMetadata($script) {

@@ -26,88 +26,92 @@ require_once ROOT . '/app/Views/layouts/header_main.php';
 
 <!-- Daily Tab -->
 <div id="content-daily" class="tab-content">
-    <div class="table-container">
-        <table class="table-glass">
-            <thead>
-                <tr>
-                    <th data-i18n="reports.date">Date</th>
-                    <th class="text-right" data-i18n="reports.total">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($daily as $date => $total): ?>
-                <tr>
-                    <td><?= $date ?></td>
-                    <td class="text-right"><?= $currency ?> <?= number_format($total, 0, ',', '.') ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+    <table class="table-glass" id="table-daily">
+        <thead>
+            <tr>
+                <th data-i18n="reports.date">Date</th>
+                <th class="text-right" data-i18n="reports.total">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($daily as $date => $total): ?>
+            <tr>
+                <td><?= $date ?></td>
+                <td class="text-right font-mono"><?= $currency ?> <?= number_format($total, 0, ',', '.') ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
 
 <!-- Monthly Tab -->
 <div id="content-monthly" class="tab-content hidden">
-    <div class="table-container">
-        <table class="table-glass">
-             <thead>
-                <tr>
-                    <th data-i18n="reports.month">Month</th>
-                    <th class="text-right" data-i18n="reports.total">Total</th>
-                </tr>
-            </thead>
-             <tbody>
-                <?php foreach ($monthly as $date => $total): ?>
-                <tr>
-                    <td><?= $date ?></td>
-                    <td class="text-right"><?= $currency ?> <?= number_format($total, 0, ',', '.') ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+    <table class="table-glass" id="table-monthly">
+            <thead>
+            <tr>
+                <th data-i18n="reports.month">Month</th>
+                <th class="text-right" data-i18n="reports.total">Total</th>
+            </tr>
+        </thead>
+            <tbody>
+            <?php foreach ($monthly as $date => $total): ?>
+            <tr>
+                <td><?= $date ?></td>
+                <td class="text-right font-mono"><?= $currency ?> <?= number_format($total, 0, ',', '.') ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
 
 <!-- Yearly Tab -->
 <div id="content-yearly" class="tab-content hidden">
-     <div class="table-container">
-        <table class="table-glass">
-             <thead>
-                <tr>
-                    <th data-i18n="reports.year">Year</th>
-                    <th class="text-right" data-i18n="reports.total">Total</th>
-                </tr>
-            </thead>
-             <tbody>
-                <?php foreach ($yearly as $date => $total): ?>
-                <tr>
-                    <td><?= $date ?></td>
-                    <td class="text-right"><?= $currency ?> <?= number_format($total, 0, ',', '.') ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+    <table class="table-glass" id="table-yearly">
+            <thead>
+            <tr>
+                <th data-i18n="reports.year">Year</th>
+                <th class="text-right" data-i18n="reports.total">Total</th>
+            </tr>
+        </thead>
+            <tbody>
+            <?php foreach ($yearly as $date => $total): ?>
+            <tr>
+                <td><?= $date ?></td>
+                <td class="text-right font-mono"><?= $currency ?> <?= number_format($total, 0, ',', '.') ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
 
+<script src="/assets/js/components/datatable.js"></script>
 <script>
-function switchTab(tabName) {
-    // Hide all contents
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-    // Show selected
-    document.getElementById('content-' + tabName).classList.remove('hidden');
-
-    // Reset tab styles
-    document.querySelectorAll('nav button').forEach(el => {
-        el.classList.remove('border-primary', 'text-primary');
-        el.classList.add('border-transparent', 'text-accents-5');
+    document.addEventListener('DOMContentLoaded', () => {
+        // Init Datatables
+        if (typeof SimpleDataTable !== 'undefined') {
+            new SimpleDataTable('#table-daily', { itemsPerPage: 10, searchable: true });
+            new SimpleDataTable('#table-monthly', { itemsPerPage: 10, searchable: true });
+            new SimpleDataTable('#table-yearly', { itemsPerPage: 10, searchable: true });
+        }
     });
 
-    // Active tab style
-    const btn = document.getElementById('tab-' + tabName);
-    btn.classList.remove('border-transparent', 'text-accents-5');
-    btn.classList.add('border-primary', 'text-primary');
-}
+    function switchTab(tabName) {
+        // Hide all contents
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+        // Show selected
+        document.getElementById('content-' + tabName).classList.remove('hidden');
+
+        // Reset tab styles
+        document.querySelectorAll('nav button').forEach(el => {
+            el.classList.remove('border-primary', 'text-primary');
+            el.classList.add('border-transparent', 'text-accents-5');
+        });
+
+        // Active tab style
+        const btn = document.getElementById('tab-' + tabName);
+        btn.classList.remove('border-transparent', 'text-accents-5');
+        btn.classList.add('border-primary', 'text-primary');
+    }
 </script>
 
 <?php require_once ROOT . '/app/Views/layouts/footer_main.php'; ?>
