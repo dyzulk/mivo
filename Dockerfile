@@ -29,8 +29,15 @@ RUN mkdir -p /var/www/html/app/Database && \
     chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
 
+# Copy Entrypoint
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Expose port
 EXPOSE 80
 
-# Start Supervisor (which starts Nginx & PHP-FPM)
+# Use Entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+# Start Supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
