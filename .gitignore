@@ -18,6 +18,7 @@ Thumbs.db
 /deploy_package.tar.gz
 /mivo_backup_*.mivo
 /mivo-*.zip
+mivo-v1.0.0.zip
 
 # Secrets and Environment
 .env

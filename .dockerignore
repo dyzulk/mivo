@@ -1,6 +1,7 @@
 .git
 .gitignore
 .github
+.gitea
 .env
 node_modules
 deploy_package.tar.gz

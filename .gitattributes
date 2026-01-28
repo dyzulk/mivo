@@ -1,6 +1,7 @@
 # Exclude development and documentation files from Composer/Git Archive
 /docs export-ignore
 /.github export-ignore
+/.gitea export-ignore
 /docker export-ignore
 /CNAME export-ignore
 /.gitattributes export-ignore
